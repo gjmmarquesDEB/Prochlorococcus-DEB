@@ -3,29 +3,6 @@
 
 %%
 function [data, txt_data, metadata] = mydata_Prochlorococcus_marinus 
-  % created by Starrlight Augustine, Bas Kooijman, Dina Lika, Goncalo Marques and Laure Pecquerie 2015/03/31
-  
-  %% Syntax
-  % [data, txt_data, metadata] = <../mydata_my_pet.m *mydata_my_pet*>
-  
-  %% Description
-  % Sets data, pseudodata, metadata, explanatory text, weight coefficients.
-  % Meant to be a template in add_my_pet
-  %
-  % Output
-  %
-  % * data: structure with data
-  % * txt_data: text vector for the presentation of results
-  % * metadata: structure with info about this entry
-  
-  %% To do (remove these remarks after editing this file)
-  % * copy this template; replace 'my_pet' by the name of your species
-  % * fill in metadata fields with the proper information
-  % * insert references for the data (an example is given)
-  % * edit fact-list for your species, where you can add species and/or data properties
-  % * edit real data; remove all data that to not belong to your pet
-  % * complete reference list
-  % * OPTIONAL : add discussion points / comments before the reference list
 
 %% set metadata
 
