@@ -2,39 +2,32 @@
 % Sets referenced data
 
 %%
-function [data, txt_data, metadata] = mydata_Prochlorococcus_marinus 
+function [data, auxData, metaData, txtData, weights] = mydata_Prochlorococcus_marinus 
 
 %% set metadata
 
 T_C = 273.15; % K, temperature at 0 degrees C (used in T_typical)
 
-metadata.phylum     = 'Cyanobacteria'; 
-metadata.class      = 'No_Class_Listed'; 
-metadata.order      = 'Prochlorales'; 
-metadata.family     = 'Prochlorococcaceae';
-metadata.species    = 'Prochlorococcus_marinus'; 
-metadata.species_en = 'Prochlorococcus_marinus'; 
-metadata.T_typical  = T_C + 24;                     % K
-metadata.data_0     = {'r_max';'td';'ssc_before';'ssc_after'};           % tags for different types of zero-variate data
-metadata.data_1     = {'tV_pro99','tXC_pro99','tXN_pro99','tXP_pro99','tV_LowP','tV_LowN','tXC_LowP','tXC_LowN','tXN_LowP','tXN_LowN','tXP_LowP','tXP_LowN' }; % tags for different types of uni-variate data
+metaData.phylum     = 'Cyanobacteria'; 
+metaData.class      = 'No_Class_Listed'; 
+metaData.order      = 'Prochlorales'; 
+metaData.family     = 'Prochlorococcaceae';
+metaData.species    = 'Prochlorococcus_marinus'; 
+metaData.species_en = 'Prochlorococcus_marinus'; 
+metaData.T_typical  = T_C + 24;                     % K
+metaData.data_0     = {'r_max';'td';'ssc_before';'ssc_after'};           % tags for different types of zero-variate data
+metaData.data_1     = {'tV_pro99','tXC_pro99','tXN_pro99','tXP_pro99','tV_LowP','tV_LowN','tXC_LowP','tXC_LowN','tXN_LowP','tXN_LowN','tXP_LowP','tXP_LowN' }; % tags for different types of uni-variate data
 
-metadata.COMPLETE = 2.5; % using criteria of LikaKear2011   %%%%%there is no value for bacteria.....%%%%%
+metaData.COMPLETE = 2.5; % using criteria of LikaKear2011   %%%%%there is no value for bacteria.....%%%%%
 
-metadata.author   = {'Michal Grossowicz'};                  % put names as authors as separate strings:  {'author1','author2'} , with corresponding author in first place 
-metadata.date_acc = [2015 06 16];                           % [year month day], date of entry is accepted into collection
-metadata.email    = {'micgros@gmail.com'};                  % e-mail of corresponding author
-metadata.address  = {'University of Haifa, Israel'};        % affiliation, postcode, country of the corresponding authorxdot9312
+metaData.author   = {'Michal Grossowicz'};                  % put names as authors as separate strings:  {'author1','author2'} , with corresponding author in first place 
+metaData.date_acc = [2015 06 16];                           % [year month day], date of entry is accepted into collection
+metaData.email    = {'micgros@gmail.com'};                  % e-mail of corresponding author
+metaData.address  = {'University of Haifa, Israel'};        % affiliation, postcode, country of the corresponding authorxdot9312
 
-% uncomment and fill in the following fields when the entry is updated:
-% metadata.author_mod_1  = {'author2'};                       % put names as authors as separate strings:  {'author1','author2'} , with corresponding author in first place 
-% metadata.date_mod_1    = [2017 09 18];                      % [year month day], date modified entry is accepted into the collection
-% metadata.email_mod_1   = {'myname@myuniv.univ'};            % e-mail of corresponding author
-% metadata.address_mod_1 = {'affiliation, zipcode, country'}; % affiliation, postcode, country of the corresponding author
 
 %% set data
 % zero-variate data;
-% typically depend on scaled functional response f.
-% here assumed to be equal for all real data; the value of f is specified in pars_init_Prochlorococcus_marinus.
 
 % % growth rates
 % data.r_max=0.71;   units.r_max='day^{-1}';   label.r_max='maximum growth rate';  bibkey.r_max='Anon2015'; temp.r_max = T_C+22; % Lin et al. 2013
@@ -108,40 +101,37 @@ temp.tXP_LowP = T_C + 24;
 
 
 %% set weights for all real data
-weight = setweights(data, []);
+weights = setweights(data, []);
 
-%% overwriting weights (remove these remarks after editing the file)
-% the weights were set automatically with the function setweigths,
-% if one wants to ovewrite one of the weights it should always present an explanation example:
-%
-% zero-variate data:
-% weight.Wdi = 100 * weight.Wdi; % Much more confidence in the ultimate dry
-%                                % weight than the other data points
-% uni-variate data: 
-% weight.tL = 2 * weight.tL;
+%% pack auxData and txtData for output
+auxData.temp = temp;
+txtData.units = units;
+txtData.label = label;
+txtData.bibkey = bibkey;
+if exist('comment','var')
+  txtData.comment = comment;
+end
 
-%% set pseudodata and respective weights
-% (pseudo data are in data.psd and weights are in weight.psd)
-% [data, units, label, weight]=addpseudodata(data, units, label, weight);
-
-%% overwriting pseudodata and respective weights (remove these remarks after editing the file)
-% the pseudodata and respective weights were set automatically with the function setpseudodata
-% if one wants to ovewrite one of the values it should always present an explanation
-% example:
-% data.psd.p_M = 1000;                    % my_pet belongs to a group with high somatic maint 
-% weight.psd.kap = 10 * weight.psd.kap;   % I need to give this pseudo data a higher weight
-
-%% pack data and txt_data for output
-data.weight=weight;
-data.temp=temp;
-txt_data.units=units;
-txt_data.label=label;
-txt_data.bibkey=bibkey;
+% %% Discussion points
+% D1 = 'Author_mod_1: I found information on the number of eggs per female as a function of length in Anon2013 that was much higher than in Anon2015 but chose to not include it as the temperature was not provided';
+% % optional bibkey: metaData.bibkey.D1 = 'Anon2013';
+% D2 = 'Author_mod_1: I was surprised to observe that the weights coefficient for ab changed so much the parameter values';     
+% % optional bibkey: metaData.bibkey.D2 = 'Kooy2010';
+% metaData.discussion = struct('D1', D1, 'D2', D2);
+% 
+% %% Facts
+% % list facts: F1, F2, etc.
+% % make sure each fact has a corresponding bib key
+% % do not put any DEB modelling assumptions here, only relevant information on
+% % biology and life-cycles etc.
+% F1 = 'The larval stage lasts 202 days and no feeding occurs';
+% metaData.bibkey.F1 = 'Wiki'; % optional bibkey
+% metaData.facts = struct('F1',F1);
 
 %% References
   bibkey = 'Wiki'; type = 'Misc'; bib = ...
   'URL = {http://en.wikipedia.org/wiki/Prochlorococcus}';   % replace my_pet by latin species name
-  eval(['metadata.biblist.' bibkey, '= ''@', type, '{', bibkey, ', ' bib, '}'';']);
+  metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
   %
 %   bibkey = 'This study'; type = 'Article'; bib =[...
 %  'author = {Grossowicz, M., Marques, G., van Voorn, G.A.K.}, ' ... 
@@ -150,7 +140,7 @@ txt_data.bibkey=bibkey;
 %   'journal = {Unpublished}, '...
 %   'volume = {}, ' ...
 %   'pages = {}'];
-%   eval(['metadata.biblist.' bibkey, '= ''@', type, '{', bibkey, ', ' bib, '}'';']);
+%   metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
   %
   bibkey = 'Kooy2010'; type = 'Book'; bib = [ ...  % used in setting of chemical parameters and pseudodata
   'author = {Kooijman, S.A.L.M.}, ' ...
@@ -159,19 +149,11 @@ txt_data.bibkey=bibkey;
   'publisher = {Cambridge Univ. Press, Cambridge}, ' ...
   'pages = {Table 4.2 (page 150), 8.1 (page 300)}, ' ...
   'URL = {http://www.bio.vu.nl/thb/research/bib/Kooy2010.html}'];
-  eval(['metadata.biblist.' bibkey, '= ''@', type, '{', bibkey, ', ' bib, '}'';']);
+  metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
   %
   bibkey = 'Anon2015'; type = 'Misc'; bib = [ ...
   'author = {Anonymous}, ' ...
   'year = {2015}, ' ...
   'URL = {http://www.fishbase.org/summary/Rhincodon-typus.html}'];
-  eval(['metadata.biblist.' bibkey, '= ''@', type, '{', bibkey, ', ' bib, '}'';']);
-
-%% Facts
-% * Standard model with egg (not foetal) development and no acceleration
-  
-%% Discussion points
-% pt1 = 'Author_mod_1: I found information on the number of eggs per female as a function of length in Anon2013 that was much higher than in Anon2015 but chose to not include it as the temperature was not provided';
-% pt2 = 'Author_mod_1: I was surprised to observe that the weight coefficient for ab changed so much the parameter values';     
-% metadata.discussion = {pt1; pt2}; 
+  metaData.biblist.(bibkey) = ['''@', type, '{', bibkey, ', ' bib, '}'';'];
 

@@ -49,7 +49,7 @@ txt_par.units = units; txt_par.label = label; par.free = free; % pack units, lab
 
 % specific densities
 %   set specific densites using the pet's taxonomy
-d_V = get_d_V(metaData.phylum, metaData.class);
+d_V = get_d_V(metadata.phylum, metadata.class);
 par.d_V = d_V;     free.d_V = 0;   units.d_V = 'g/cm^3';  label.d_V = 'specific density of structure'; 
 par.d_EC = d_V;    free.d_EC = 0;  units.d_EC = 'g/cm^3'; label.d_EC = 'specific density of carbon reserve'; 
 par.d_EN = d_V;    free.d_EN = 0;  units.d_EN = 'g/cm^3'; label.d_EN = 'specific density of nitrogen reserve'; 
@@ -81,17 +81,66 @@ par.n_OEC = 1;    free.n_OEC = 0;  units.n_OEC = '-'; label.n_OEC = 'chem. index
 par.n_NEC = 0;    free.n_NEC = 0;  units.n_NEC = '-'; label.n_NEC = 'chem. index of nitrogen in carbon reserve';
 par.n_PEC = 0;    free.n_PEC = 0;  units.n_PEC = '-'; label.n_PEC = 'chem. index of phosphorous in carbon reserve';
 %
-par.n_CEN = 1;    free.n_CEN = 0;  units.n_CEN = '-'; label.n_CEN = 'chem. index of carbon in nitrogen reserve';   % n_CE = 1 by definition
-par.n_HEN = 2;    free.n_HEN = 0;  units.n_HEN = '-'; label.n_HEN = 'chem. index of hydrogen in nitrogen reserve';
-par.n_OEN = 1;    free.n_OEN = 0;  units.n_OEN = '-'; label.n_OEN = 'chem. index of oxygen in nitrogen reserve';
-par.n_NEN = 0;    free.n_NEN = 0;  units.n_NEN = '-'; label.n_NEN = 'chem. index of nitrogen in nitrogen reserve';
-par.n_PEN = 0;    free.n_PEN = 0;  units.n_PEN = '-'; label.n_PEN = 'chem. index of phosphorous in nitrogen reserve';
+par.n_CEN = 1;    free.n_CEN = 0;  units.n_CEN = '-'; label.n_CEC = 'chem. index of carbon in carbon reserve';   % n_CE = 1 by definition
+par.n_HEC = 2;    free.n_HEC = 0;  units.n_HEC = '-'; label.n_HEC = 'chem. index of hydrogen in carbon reserve';
+par.n_OEC = 1;    free.n_OEC = 0;  units.n_OEC = '-'; label.n_OEC = 'chem. index of oxygen in carbon reserve';
+par.n_NEC = 0;    free.n_NEC = 0;  units.n_NEC = '-'; label.n_NEC = 'chem. index of nitrogen in carbon reserve';
+par.n_PEC = 0;    free.n_PEC = 0;  units.n_PEC = '-'; label.n_PEC = 'chem. index of phosphorous in carbon reserve';
 %
-par.n_CEP = 1;    free.n_CEP = 0;  units.n_CEP = '-'; label.n_CEP = 'chem. index of carbon in phosphorous reserve';   % n_CE = 1 by definition
-par.n_HEP = 2;    free.n_HEP = 0;  units.n_HEP = '-'; label.n_HEP = 'chem. index of hydrogen in phosphorous reserve';
-par.n_OEP = 1;    free.n_OEP = 0;  units.n_OEP = '-'; label.n_OEP = 'chem. index of oxygen in phosphorous reserve';
-par.n_NEP = 0;    free.n_NEP = 0;  units.n_NEP = '-'; label.n_NEP = 'chem. index of nitrogen in phosphorous reserve';
-par.n_PEP = 0;    free.n_PEP = 0;  units.n_PEP = '-'; label.n_PEP = 'chem. index of phosphorous in phosphorous reserve';
+par.n_CEC = 1;    free.n_CEC = 0;  units.n_CEC = '-'; label.n_CEC = 'chem. index of carbon in carbon reserve';   % n_CE = 1 by definition
+par.n_HEC = 2;    free.n_HEC = 0;  units.n_HEC = '-'; label.n_HEC = 'chem. index of hydrogen in carbon reserve';
+par.n_OEC = 1;    free.n_OEC = 0;  units.n_OEC = '-'; label.n_OEC = 'chem. index of oxygen in carbon reserve';
+par.n_NEC = 0;    free.n_NEC = 0;  units.n_NEC = '-'; label.n_NEC = 'chem. index of nitrogen in carbon reserve';
+par.n_PEC = 0;    free.n_PEC = 0;  units.n_PEC = '-'; label.n_PEC = 'chem. index of phosphorous in carbon reserve';
+%
+par.n_CP = 1;      free.n_CP = 0;  units.n_CP = '-'; label.n_CP = 'chem. index of carbon in faeces';    % n_CP = 1 by definition
+par.n_HP = 1.8;    free.n_HP = 0;  units.n_HP = '-'; label.n_HP = 'chem. index of hydrogen in faeces';
+par.n_OP = 0.5;    free.n_OP = 0;  units.n_OP = '-'; label.n_OP = 'chem. index of oxygen in faeces';
+par.n_NP = 0.15;   free.n_NP = 0;  units.n_NP = '-'; label.n_NP = 'chem. index of nitrogen in faeces';  
+
+
+
+
+% chemical indices from Kooy2010 Fig 4.15
+%       V        E_C  E_N  E_P
+n_O = [1,        1,   0,   0;  % C/C, equals 1 by definition
+       263/106,  2,   4,   0;  % H/C  these values show that we consider dry-mass
+       10/106,   1,   0,   4;  % O/C
+       16/106,   0,   1,   0;    % N/C
+       1/106,    0,   0,   1]; % P/C
+
+ w_O = n_O' * [12; 1; 16; 14; 31]; % g/mol, mol-weights for (unhydrated)  org. compounds
+ w_V = w_O(1);
+ w_EC = w_O(2);
+ w_EN = w_O(3);
+ w_EP = w_O(4);   
+   
+%       C     H     O     N     P
+n_M = [ 1     0     0     0     0;    % C/C, equals 0 or 1
+        0     2     0     3     0;    % H/C
+        2     1     2     0     4;    % O/C
+        0     0     0     1     0;   % N/C
+        0     0     0     0     1];   % P/C
+    
+
+% pack chem 
+chem = struct(...
+'mu_M', mu_M,  ...
+'mu_V', mu_O(1),  ...
+'mu_EC', mu_O(2),  ...
+'mu_EN', mu_O(3),  ...
+'mu_EP', mu_O(4),  ...
+'d_V',  d_O(1),   ...
+'d_EC',  d_O(2),   ...
+'d_EN',  d_O(3),   ...
+'d_EP',  d_O(4),   ...
+'X_gas', X_gas, ...
+'n_O',  n_O,   ...
+'n_M',  n_M, ...
+'w_V', w_V, ...
+'w_EC', w_EC, ... 
+'w_EN', w_EN, ...
+'w_EP', w_EP);
 
 %% Pack output:
 txtPar.units = units; txtPar.label = label; par.free = free; 

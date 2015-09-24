@@ -2,37 +2,24 @@
 % Obtains predictions, using parameters and data
 
 %%
-function [Prd_data, info] = predict_Prochlorococcus_marinus(par, chem, T_ref, data)
-  % created by Starrlight Augustine, Dina Lika, Bas Kooijman, Goncalo Marques and Laure Pecquerie 2015/01/30
+function [prdData, info] = predict_Prochlorococcus_marinus(par, data, auxData)
   
-  %% Syntax
-  % [Prd_data, info] = <../predict_Prochlorococcus_marinus.m *predict_Prochlorococcus_marinus*>(par, chem, data)
+  %% unpack par, data and auxData
+  vars_pull(par); vars_pull(data);  vars_pull(auxData);
   
-  %% Description
-  % Obtains predictions, using parameters and data
-  %
-  % Input
-  %
-  % * par: structure with parameters (see below)
-  % * chem: structure with biochemical parameters
-  % * data: structure with data (not all elements are used)
-  %  
-  % Output
-  %
-  % * Prd_data: structure with predicted values for data
-  
-  %% Remarks
-  % Template for use in add_my_pet
-  
-  %% unpack par, chem, cpar and data
-%   cpar = parscomp_st(par, chem);
-  v2struct(par); v2struct(chem); 
-%   v2struct(cpar);
-  v2struct(data);
+  %       V        E_C  E_N  E_P
+  n_O = [n_CV, n_CEC, n_CEN, n_CEP;  % C/C, equals 1 by definition
+         n_HV, n_HEC, n_HEN, n_HEP;  % H/C  these values show that we consider dry-mass
+         n_OV, n_OEC, n_OEN, n_OEP;  % O/C
+         n_NV, n_NEC, n_NEN, n_NEP;    % N/C
+         n_PV, n_PEC, n_PEN, n_PEP]; % P/C
+
+  w_O  = n_O' * [12; 1; 16; 14; 31]; % g/mol, mol-weights for (unhydrated)  org. compounds
+  w_V  = w_O(1);  w_EC = w_O(2);  w_EN = w_O(3);  w_EP = w_O(4);
   
   %% compute temperature correction factors
   
-  TC_tXN=tempcorr(temp.tXN_pro99, T_ref,T_A);
+  TC_tXN = tempcorr(temp.tXN_pro99, T_ref,T_A);
   
   j_EN_Am = j_EN_Am*TC_tXN;
   j_EP_Am = j_EP_Am*TC_tXN;
@@ -54,9 +41,9 @@ function [Prd_data, info] = predict_Prochlorococcus_marinus(par, chem, T_ref, da
 %   
 %   %% pack to output
 %   % the names of the fields in the structure must be the same as the data names in the mydata file
-%    Prd_data.r_max=R_max;
-%    Prd_data.td=T_d;
-%    Prd_data.I=Ii;
+%    prdData.r_max=R_max;
+%    prdData.td=T_d;
+%    prdData.I=Ii;
   %% uni-variate data
   
   % time-nutriens: N & P
@@ -210,23 +197,23 @@ function [Prd_data, info] = predict_Prochlorococcus_marinus(par, chem, T_ref, da
 
   %% pack to output
   % the names of the fields in the structure must be the same as the data names in the mydata file
-%   Prd_data.num_cell=NumCell;
-%   Prd_data.biomass=Biomass;
-  Prd_data.tXN_pro99 = XNut_pro99(pos_N_pro99, 2) * 1e6; % concentration in muM
-  Prd_data.tXP_pro99 = XNut_pro99(pos_N_pro99, 3) * 1e6; % concentration in muM
-  Prd_data.tXC_pro99 = XNut_pro99(pos_C_pro99, 1) * 1e6; % concentration in muM
-  Prd_data.tV_pro99 = w_V*XNut_pro99(pos_V_pro99, 7) + w_EC*XNut_pro99(pos_V_pro99, 4).*XNut_pro99(pos_V_pro99, 7) + w_EN*XNut_pro99(pos_V_pro99, 5).*XNut_pro99(pos_V_pro99, 7)+ w_EP*XNut_pro99(pos_V_pro99, 6).*XNut_pro99(pos_V_pro99, 7);       % biomass in mols
+%   prdData.num_cell=NumCell;
+%   prdData.biomass=Biomass;
+  prdData.tXN_pro99 = XNut_pro99(pos_N_pro99, 2) * 1e6; % concentration in muM
+  prdData.tXP_pro99 = XNut_pro99(pos_N_pro99, 3) * 1e6; % concentration in muM
+  prdData.tXC_pro99 = XNut_pro99(pos_C_pro99, 1) * 1e6; % concentration in muM
+  prdData.tV_pro99 = w_V*XNut_pro99(pos_V_pro99, 7) + w_EC*XNut_pro99(pos_V_pro99, 4).*XNut_pro99(pos_V_pro99, 7) + w_EN*XNut_pro99(pos_V_pro99, 5).*XNut_pro99(pos_V_pro99, 7)+ w_EP*XNut_pro99(pos_V_pro99, 6).*XNut_pro99(pos_V_pro99, 7);       % biomass in mols
 
-  Prd_data.tXN_LowN = XNut_LowN(pos_N_LowN, 2) * 1e6; % concentration in muM
-  Prd_data.tXP_LowN = XNut_LowN(pos_N_LowN, 3) * 1e6; % concentration in muM
-  Prd_data.tXC_LowN = XNut_LowN(pos_C_LowN, 1) * 1e6; % concentration in muM
-  Prd_data.tV_LowN = w_V*XNut_LowN(pos_V_LowN, 7) + w_EC*XNut_LowN(pos_V_LowN, 4).*XNut_LowN(pos_V_LowN, 7) + w_EN*XNut_LowN(pos_V_LowN, 5).*XNut_LowN(pos_V_LowN, 7)+ w_EP*XNut_LowN(pos_V_LowN, 6).*XNut_LowN(pos_V_LowN, 7);       % biomass in mols
+  prdData.tXN_LowN = XNut_LowN(pos_N_LowN, 2) * 1e6; % concentration in muM
+  prdData.tXP_LowN = XNut_LowN(pos_N_LowN, 3) * 1e6; % concentration in muM
+  prdData.tXC_LowN = XNut_LowN(pos_C_LowN, 1) * 1e6; % concentration in muM
+  prdData.tV_LowN = w_V*XNut_LowN(pos_V_LowN, 7) + w_EC*XNut_LowN(pos_V_LowN, 4).*XNut_LowN(pos_V_LowN, 7) + w_EN*XNut_LowN(pos_V_LowN, 5).*XNut_LowN(pos_V_LowN, 7)+ w_EP*XNut_LowN(pos_V_LowN, 6).*XNut_LowN(pos_V_LowN, 7);       % biomass in mols
 
-  Prd_data.tXN_LowP = XNut_LowP(pos_N_LowP, 2) * 1e6; % concentration in muM
-  Prd_data.tXP_LowP = XNut_LowP(pos_N_LowP, 3) * 1e6; % concentration in muM
-  Prd_data.tXC_LowP = XNut_LowP(pos_C_LowP, 1) * 1e6; % concentration in muM
-  Prd_data.tV_LowP = w_V*XNut_LowP(pos_V_LowP, 7) + w_EC*XNut_LowP(pos_V_LowP, 4).*XNut_LowP(pos_V_LowP, 7) + w_EN*XNut_LowP(pos_V_LowP, 5).*XNut_LowP(pos_V_LowP, 7)+ w_EP*XNut_LowP(pos_V_LowP, 6).*XNut_LowP(pos_V_LowP, 7);       % biomass in mols
+  prdData.tXN_LowP = XNut_LowP(pos_N_LowP, 2) * 1e6; % concentration in muM
+  prdData.tXP_LowP = XNut_LowP(pos_N_LowP, 3) * 1e6; % concentration in muM
+  prdData.tXC_LowP = XNut_LowP(pos_C_LowP, 1) * 1e6; % concentration in muM
+  prdData.tV_LowP = w_V*XNut_LowP(pos_V_LowP, 7) + w_EC*XNut_LowP(pos_V_LowP, 4).*XNut_LowP(pos_V_LowP, 7) + w_EN*XNut_LowP(pos_V_LowP, 5).*XNut_LowP(pos_V_LowP, 7)+ w_EP*XNut_LowP(pos_V_LowP, 6).*XNut_LowP(pos_V_LowP, 7);       % biomass in mols
 
-  %   Prd_data.reserve=Reserve;
+  %   prdData.reserve=Reserve;
   
   info = 1;
