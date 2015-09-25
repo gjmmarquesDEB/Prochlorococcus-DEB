@@ -26,7 +26,7 @@ estim_options('max_fun_evals',5e3);  % set options for parameter estimation
 estim_options('pars_init_method', 2);
 estim_options('pseudodata_pets', 2);
 estim_options('results_output', 1);
-estim_options('method', 'no');
+estim_options('method', 'nm');
 
 % check_my_pet('Prochlorococcus_marinus') % check pet-files for required fields
 estim_pars; % run estimation
