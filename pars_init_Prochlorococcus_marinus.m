@@ -81,17 +81,17 @@ par.n_OEC = 1;    free.n_OEC = 0;  units.n_OEC = '-'; label.n_OEC = 'chem. index
 par.n_NEC = 0;    free.n_NEC = 0;  units.n_NEC = '-'; label.n_NEC = 'chem. index of nitrogen in carbon reserve';
 par.n_PEC = 0;    free.n_PEC = 0;  units.n_PEC = '-'; label.n_PEC = 'chem. index of phosphorous in carbon reserve';
 %
-par.n_CEN = 1;    free.n_CEN = 0;  units.n_CEN = '-'; label.n_CEN = 'chem. index of carbon in nitrogen reserve';   % n_CE = 1 by definition
-par.n_HEN = 2;    free.n_HEN = 0;  units.n_HEN = '-'; label.n_HEN = 'chem. index of hydrogen in nitrogen reserve';
-par.n_OEN = 1;    free.n_OEN = 0;  units.n_OEN = '-'; label.n_OEN = 'chem. index of oxygen in nitrogen reserve';
-par.n_NEN = 0;    free.n_NEN = 0;  units.n_NEN = '-'; label.n_NEN = 'chem. index of nitrogen in nitrogen reserve';
+par.n_CEN = 0;    free.n_CEN = 0;  units.n_CEN = '-'; label.n_CEN = 'chem. index of carbon in nitrogen reserve';   % n_CE = 1 by definition
+par.n_HEN = 4;    free.n_HEN = 0;  units.n_HEN = '-'; label.n_HEN = 'chem. index of hydrogen in nitrogen reserve';
+par.n_OEN = 0;    free.n_OEN = 0;  units.n_OEN = '-'; label.n_OEN = 'chem. index of oxygen in nitrogen reserve';
+par.n_NEN = 1;    free.n_NEN = 0;  units.n_NEN = '-'; label.n_NEN = 'chem. index of nitrogen in nitrogen reserve';
 par.n_PEN = 0;    free.n_PEN = 0;  units.n_PEN = '-'; label.n_PEN = 'chem. index of phosphorous in nitrogen reserve';
 %
-par.n_CEP = 1;    free.n_CEP = 0;  units.n_CEP = '-'; label.n_CEP = 'chem. index of carbon in phosphorous reserve';   % n_CE = 1 by definition
-par.n_HEP = 2;    free.n_HEP = 0;  units.n_HEP = '-'; label.n_HEP = 'chem. index of hydrogen in phosphorous reserve';
-par.n_OEP = 1;    free.n_OEP = 0;  units.n_OEP = '-'; label.n_OEP = 'chem. index of oxygen in phosphorous reserve';
+par.n_CEP = 0;    free.n_CEP = 0;  units.n_CEP = '-'; label.n_CEP = 'chem. index of carbon in phosphorous reserve';   % n_CE = 1 by definition
+par.n_HEP = 0;    free.n_HEP = 0;  units.n_HEP = '-'; label.n_HEP = 'chem. index of hydrogen in phosphorous reserve';
+par.n_OEP = 4;    free.n_OEP = 0;  units.n_OEP = '-'; label.n_OEP = 'chem. index of oxygen in phosphorous reserve';
 par.n_NEP = 0;    free.n_NEP = 0;  units.n_NEP = '-'; label.n_NEP = 'chem. index of nitrogen in phosphorous reserve';
-par.n_PEP = 0;    free.n_PEP = 0;  units.n_PEP = '-'; label.n_PEP = 'chem. index of phosphorous in phosphorous reserve';
+par.n_PEP = 1;    free.n_PEP = 0;  units.n_PEP = '-'; label.n_PEP = 'chem. index of phosphorous in phosphorous reserve';
 
 %% Pack output:
 txtPar.units = units; txtPar.label = label; par.free = free; 
