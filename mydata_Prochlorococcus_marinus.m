@@ -65,14 +65,14 @@ units.SD.tV_pro99 = {'mol L^{-1}'}; label.SD.tV_pro99 = {'Biomass in C-moles'}; 
 data.tV_LowN=[num_cell(:,1),num_cell(:,3)*4.5639e-15]; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
 units.tV_LowN={'days','mol L^{-1}'}; label.tV_LowN={'time','Biomass in C-moles'};  bibkey.tV_LowN='Anon2015';  temp.tV_LowN=T_C+24;
 
-% data.tV_LowN_SD=num_cell(:,6)*4.5639e-15; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
-% units.tV_LowN_SD={'mol L^{-1}'}; label.tV_LowN_SD={'Biomass in C-moles'};  bibkey.tV_LowN_SD='Anon2015';  temp.tV_LowN_SD=T_C+24;
+SD.tV_LowN = num_cell(:,6)*4.5639e-15; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
+units.SD.tV_LowN = {'mol L^{-1}'}; label.SD.tV_LowN = {'Biomass in C-moles'};  bibkey.SD.tV_LowN = 'Anon2015';  temp.SD.tV_LowN = T_C+24;
 
 data.tV_LowP=[num_cell(:,1),num_cell(:,4)*4.5639e-15]; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
 units.tV_LowP={'days','mol L^{-1}'}; label.tV_LowP={'time','Biomass in C-moles'};  bibkey.tV_LowP='Anon2015';  temp.tV_LowP=T_C+24;
 
-% data.tV_LowP_SD=num_cell(:,7)*4.5639e-15; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
-% units.tV_LowP_SD={'mol L^{-1}'}; label.tV_LowP_SD={'Biomass in C-moles'};  bibkey.tV_LowP_SD='Anon2015';  temp.tV_LowP_SD=T_C+24;
+SD.tV_LowP = num_cell(:,7)*4.5639e-15; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
+units.SD.tV_LowP = {'mol L^{-1}'}; label.SD.tV_LowP = {'Biomass in C-moles'};  bibkey.SD.tV_LowP = 'Anon2015';  temp.SD.tV_LowP = T_C+24;
 
 % nutrients
 nut = [0 2	4	6	8  9 11	13	14	15	16	18	23; % d
@@ -100,56 +100,56 @@ Carbon=[0 7 13 19;
 data.tXC_pro99=Carbon(:,[1 2]) ;  units.tXC_pro99 = {'days','\mu mol L^{-1}'};   label.tXC_pro99 = {'time','C concentration'};   bibkey.tXC_pro99 = 'Anon2015';
 temp.tXC_pro99 = T_C + 24; 
 
-% data.tXC_pro99_SD=Carbon(:,5) ;  units.tXC_pro99_SD = {'\mu mol L^{-1}'};   label.tXC_pro99_SD = {'C concentration SD'};   bibkey.tXC_pro99_SD = 'Anon2015';
-% temp.tXC_pro99_SD = T_C + 24; 
+SD.tXC_pro99 = Carbon(:,5);  units.SD.tXC_pro99 = {'\mu mol L^{-1}'}; label.SD.tXC_pro99 = {'C concentration SD'};  bibkey.SD.tXC_pro99 = 'Anon2015';  
+temp.SD.tXC_pro99 = T_C+24;
 
 data.tXC_LowN=Carbon(:,[1 3]) ;  units.tXC_LowN = {'days','\mu mol L^{-1}'};   label.tXC_LowN = {'time','C concentration'};   bibkey.tXC_LowN = 'Anon2015';
 temp.tXC_LowN = T_C + 24; 
 
-% data.tXC_LowN_SD=Carbon(:,6) ;  units.tXC_LowN_SD = {'\mu mol L^{-1}'};   label.tXC_LowN_SD = {'C concentration SD'};   bibkey.tXC_LowN_SD = 'Anon2015';
-% temp.tXC_LowN_SD = T_C + 24; 
+SD.tXC_LowN = Carbon(:,6);  units.SD.tXC_LowN = {'\mu mol L^{-1}'}; label.SD.tXC_LowN = {'C concentration SD'};  bibkey.SD.tXC_LowN = 'Anon2015';  
+temp.SD.tXC_LowN = T_C+24;
 
 data.tXC_LowP=Carbon(:,[1 4]) ;  units.tXC_LowP = {'days','\mu mol L^{-1}'};   label.tXC_LowP = {'time','C concentration'};   bibkey.tXC_LowP = 'Anon2015';
 temp.tXC_LowP = T_C + 24; 
 
-% data.tXC_LowP_SD=Carbon(:,7) ;  units.tXC_LowP_SD = {'\mu mol L^{-1}'};   label.tXC_LowP_SD = {'C concentration SD'};   bibkey.tXC_LowP_SD = 'Anon2015';
-% temp.tXC_LowP_SD = T_C + 24; 
+SD.tXC_LowP = Carbon(:,7);  units.SD.tXC_LowP = {'\mu mol L^{-1}'}; label.SD.tXC_LowP = {'C concentration SD'};  bibkey.SD.tXC_LowP = 'Anon2015';  
+temp.SD.tXC_LowP = T_C+24;
 
 data.tXN_pro99 = nut(:,[1 2]);     units.tXN_pro99 = {'days','\mu mol L^{-1}'};   label.tXN_pro99 = {'time','N concentration'};   bibkey.tXN_pro99 = 'Anon2015';
 temp.tXN_pro99 = T_C + 24; 
 
-% data.tXN_pro99_SD=nut(:,8) ;  units.tXN_pro99_SD = {'\mu mol L^{-1}'};   label.tXN_pro99_SD = {'N concentration SD'};   bibkey.tXN_pro99_SD = 'Anon2015';
-% temp.tXN_pro99_SD = T_C + 24; 
+SD.tXN_pro99 = nut(:,8);  units.SD.tXN_pro99 = {'\mu mol L^{-1}'}; label.SD.tXN_pro99 = {'N concentration SD'};  bibkey.SD.tXN_pro99 = 'Anon2015';  
+temp.SD.tXN_pro99 = T_C+24;
 
 data.tXP_pro99 = nut(:,[1 3]);     units.tXP_pro99 = {'days','\mu mol L^{-1}'};   label.tXP_pro99 = {'time','P concentration'};   bibkey.tXP_pro99 = 'Anon2015';
 temp.tXP_pro99 = T_C + 24; 
 
-% data.tXP_pro99_SD=nut(:,9) ;  units.tXN_pro99_SD = {'\mu mol L^{-1}'};   label.tXN_pro99_SD = {'P concentration SD'};   bibkey.tXN_pro99_SD = 'Anon2015';
-% temp.tXP_pro99_SD = T_C + 24; 
+SD.tXP_pro99 = nut(:,9);  units.SD.tXP_pro99 = {'\mu mol L^{-1}'}; label.SD.tXP_pro99 = {'P concentration SD'};  bibkey.SD.tXP_pro99 = 'Anon2015';  
+temp.SP.tXN_pro99 = T_C+24;
 
 data.tXN_LowN = nut(:,[1 4]);     units.tXN_LowN = {'days','\mu mol L^{-1}'};   label.tXN_LowN = {'time','N concentration'};   bibkey.tXN_LowN = 'Anon2015';
 temp.tXN_LowN = T_C + 24; 
 
-% data.tXN_LowN_SD=nut(:,10) ;  units.tXN_LowN_SD = {'\mu mol L^{-1}'};   label.tXN_LowN_SD = {'N concentration SD'};   bibkey.tXN_LowN_SD = 'Anon2015';
-% temp.tXN_LowN_SD = T_C + 24; 
+SD.tXN_LowN = nut(:,10);  units.SD.tXN_LowN = {'\mu mol L^{-1}'}; label.SD.tXN_LowN = {'N concentration SD'};  bibkey.SD.tXN_LowN = 'Anon2015';  
+temp.SD.tXN_LowN = T_C+24;
 
 data.tXP_LowN = nut(:,[1 5]);     units.tXP_LowN = {'days','\mu mol L^{-1}'};   label.tXP_LowN = {'time','P concentration'};   bibkey.tXP_LowN = 'Anon2015';
 temp.tXP_LowN = T_C + 24; 
 
-% data.tXP_LowN_SD=nut(:,11) ;  units.tXP_LowN_SD = {'\mu mol L^{-1}'};   label.tXP_LowN_SD = {'P concentration SD'};   bibkey.tXP_LowN_SD = 'Anon2015';
-% temp.tXP_LowN_SD = T_C + 24; 
+SD.tXP_LowN = nut(:,11);  units.SD.tXP_LowN = {'\mu mol L^{-1}'}; label.SD.tXP_LowN = {'P concentration SD'};  bibkey.SD.tXP_LowN = 'Anon2015';  
+temp.SP.tXN_LowN = T_C+24;
 
 data.tXN_LowP = nut(:,[1 6]);     units.tXN_LowP = {'days','\mu mol L^{-1}'};   label.tXN_LowP = {'time','N concentration'};   bibkey.tXN_LowP = 'Anon2015';
 temp.tXN_LowP = T_C + 24; 
 
-% data.tXN_LowP_SD=nut(:,12) ;  units.tXN_LowP_SD = {'\mu mol L^{-1}'};   label.tXN_LowP_SD = {'N concentration SD'};   bibkey.tXN_LowP_SD = 'Anon2015';
-% temp.tXN_LowP_SD = T_C + 24; 
+SD.tXN_LowP = nut(:,12);  units.SD.tXN_LowP = {'\mu mol L^{-1}'}; label.SD.tXN_LowP = {'N concentration SD'};  bibkey.SD.tXN_LowP = 'Anon2015';  
+temp.SD.tXN_LowP = T_C+24;
 
 data.tXP_LowP = nut(:,[1 7]);     units.tXP_LowP = {'days','\mu mol L^{-1}'};   label.tXP_LowP = {'time','P concentration'};   bibkey.tXP_LowP = 'Anon2015';
 temp.tXP_LowP = T_C + 24; 
 
-% data.tXP_LowP_SD=nut(:,13) ;  units.tXN_LowP_SD = {'\mu mol L^{-1}'};   label.tXN_LowP_SD = {'P concentration SD'};   bibkey.tXN_LowP_SD = 'Anon2015';
-% temp.tXN_LowP_SD = T_C + 24; 
+SD.tXP_LowP = nut(:,13);  units.SD.tXP_LowP = {'\mu mol L^{-1}'}; label.SD.tXP_LowP = {'P concentration SD'};  bibkey.SD.tXP_LowP = 'Anon2015';  
+temp.SP.tXN_LowP = T_C+24;
 
 %% set weights for all real data
 weights = setweights(data, []);
