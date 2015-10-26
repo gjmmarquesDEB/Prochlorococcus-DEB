@@ -16,7 +16,10 @@ metaData.species    = 'Prochlorococcus_marinus';
 metaData.species_en = 'Prochlorococcus_marinus'; 
 metaData.T_typical  = T_C + 24;                     % K
 metaData.data_0     = {'r_max';'td';'ssc_before';'ssc_after'};           % tags for different types of zero-variate data
-metaData.data_1     = {'tV_pro99','tXC_pro99','tXN_pro99','tXP_pro99','tV_LowP','tV_LowN','tXC_LowP','tXC_LowN','tXN_LowP','tXN_LowN','tXP_LowP','tXP_LowN' }; % tags for different types of uni-variate data
+metaData.data_1     = {'tV_pro99','tV_pro99_SD','tV_LowP','tV_LowN','tV_LowP_SD','tV_LowN_SD', ...
+                       'tXC_pro99','tXN_pro99','tXP_pro99','tXC_pro99_SD','tXN_pro99_SD','tXP_pro99_SD', ...
+                       'tXC_LowN','tXN_LowN','tXP_LowN','tXC_LowN_SD','tXN_LowN_SD','tXP_LowN_SD', ... 
+                       'tXC_LowP','tXN_LowP','tXP_LowP','tXC_LowP_SD','tXN_LowP_SD','tXP_LowP_SD'}; % tags for different types of uni-variate data
 
 metaData.COMPLETE = 2.5; % using criteria of LikaKear2011   %%%%%there is no value for bacteria.....%%%%%
 

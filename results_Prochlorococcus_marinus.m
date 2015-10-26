@@ -66,72 +66,105 @@ function results_Prochlorococcus_marinus(txt_par, par, chem, metapar, txt_data, 
 
   figure(1) % figure to show results of uni-variate data for pro99
   subplot(2,3,1)
-  plot(t, EXC_pro99, 'g', tXC_pro99(:,1), tXC_pro99(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, EXC_pro99, 'g')
+  hold on
+  errorbar(tXC_pro99(:,1), tXC_pro99(:,2), tXC_pro99_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Carbon concentration, \mumol L^{-1}')
+  
   subplot(2,3,2)
-  plot(t, EXN_pro99, 'g', tXN_pro99(:,1), tXN_pro99(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, EXN_pro99, 'g')
+  hold on
+  errorbar(tXN_pro99(:,1), tXN_pro99(:,2), tXN_pro99_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Nitrogen concentration, \mumol L^{-1}')
   title('PRO99 medium experiment')
   %print -dpng results_Prochlorococcus_marinus_01.png
+  
   subplot(2,3,3)
-  plot(t, EXP_pro99, 'g', tXP_pro99(:,1), tXP_pro99(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, EXP_pro99, 'g')
+  hold on
+  errorbar(tXP_pro99(:,1), tXP_pro99(:,2), tXP_pro99_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Phosphorous concentration, \mumol L^{-1}')
+  
   subplot(2,3,4)
-  plot(t, V_pro99, 'g', tV_pro99(:,1), tV_pro99(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, V_pro99, 'g')
+  hold on
+  errorbar(tV_pro99(:,1), tV_pro99(:,2), tV_pro99_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Biomass, mol L^{-1}')  
   
   figure(2) % figure to show results of uni-variate data for LowN
   subplot(2,3,1)
-  plot(t, EXC_LowN, 'g', tXC_LowN(:,1), tXC_LowN(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, EXC_LowN, 'g')
+  hold on
+  errorbar(tXC_LowN(:,1), tXC_LowN(:,2), tXC_LowN_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Carbon concentration, \mumol L^{-1}')
+  
   subplot(2,3,2)
-  plot(t, EXN_LowN, 'g', tXN_LowN(:,1), tXN_LowN(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, EXN_LowN, 'g')
+  hold on
+  errorbar(tXN_LowN(:,1), tXN_LowN(:,2), tXN_LowN_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Nitrogen concentration, \mumol L^{-1}')
   title('Low N medium experiment')
   %print -dpng results_Prochlorococcus_marinus_01.png
+  
   subplot(2,3,3)
-  plot(t, EXP_LowN, 'g', tXP_LowN(:,1), tXP_LowN(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, EXP_LowN, 'g')
+  hold on
+  errorbar(tXP_LowN(:,1), tXP_LowN(:,2), tXP_LowN_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Phosphorous concentration, \mumol L^{-1}')
+  
   subplot(2,3,4)
-  plot(t, V_LowN, 'g', tV_LowN(:,1), tV_LowN(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, V_LowN, 'g')
+  hold on
+  errorbar(tV_LowN(:,1), tV_LowN(:,2), tV_LowN_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Biomass, mol L^{-1}')  
   
   figure(3) % figure to show results of uni-variate data for LowP
   subplot(2,3,1)
-  plot(t, EXC_LowP, 'g', tXC_LowP(:,1), tXC_LowP(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, EXC_LowP, 'g')
+  hold on
+  errorba(tXC_LowP(:,1), tXC_LowP(:,2), tXC_LowP_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Carbon concentration, \mumol L^{-1}')
+  
   subplot(2,3,2)
-  plot(t, EXN_LowP, 'g', tXN_LowP(:,1), tXN_LowP(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, EXN_LowP, 'g')
+  hold on
+  errorbar(tXN_LowP(:,1), tXN_LowP(:,2), tXN_LowP_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Nitrogen concentration, \mumol L^{-1}')
   title('Low P medium experiment')
 %print -dpng results_Prochlorococcus_marinus_01.png
+  
   subplot(2,3,3)
-  plot(t, EXP_LowP, 'g', tXP_LowP(:,1), tXP_LowP(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, EXP_LowP, 'g')
+  hold on
+  errorbar(tXP_LowP(:,1), tXP_LowP(:,2), tXP_LowP_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Phosphorous concentration, \mumol L^{-1}')
+  
   subplot(2,3,4)
-  plot(t, V_LowP, 'g', tV_LowP(:,1), tV_LowP(:,2), '.r', 'markersize', 20, 'linewidth', 4)
+  plot(t, V_LowP, 'g')
+  hold on
+  errorbar(tV_LowP(:,1), tV_LowP(:,2), tV_LowP_SD, '.r', 'markersize', 20, 'linewidth', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlabel('time, days')
   ylabel('Biomass, mol L^{-1}')  
