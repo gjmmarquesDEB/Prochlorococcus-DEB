@@ -40,7 +40,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   prdData.tV_LowP = t;
   
   % overwrite prdData to obtain dependent variables
-  prdData = predict_Prochlorococcus_marinus(par, prdData, auxData);
+  [prdData, info, StVar_pro99, StVar_LowN, StVar_LowP] = predict_Prochlorococcus_marinus(par, prdData, auxData);
  
   v2struct(data); v2struct(auxData);
   
@@ -70,6 +70,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tXC_pro99(:,1), tXC_pro99(:,2), SD.tXC_pro99, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Carbon concentration, \mumol L^{-1}')
   
@@ -78,6 +79,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tXN_pro99(:,1), tXN_pro99(:,2), SD.tXN_pro99, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Nitrogen concentration, \mumol L^{-1}')
   title('PRO99 medium experiment')
@@ -88,6 +90,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tXP_pro99(:,1), tXP_pro99(:,2), SD.tXP_pro99, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Phosphorous concentration, \mumol L^{-1}')
   
@@ -96,6 +99,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tV_pro99(:,1), tV_pro99(:,2), SD.tV_pro99, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Biomass, mol L^{-1}')  
   
@@ -105,6 +109,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tXC_LowN(:,1), tXC_LowN(:,2), SD.tXC_LowN, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Carbon concentration, \mumol L^{-1}')
   
@@ -113,6 +118,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tXN_LowN(:,1), tXN_LowN(:,2), SD.tXN_LowN, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Nitrogen concentration, \mumol L^{-1}')
   title('Low N medium experiment')
@@ -123,6 +129,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tXP_LowN(:,1), tXP_LowN(:,2), SD.tXP_LowN, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Phosphorous concentration, \mumol L^{-1}')
   
@@ -131,6 +138,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tV_LowN(:,1), tV_LowN(:,2), SD.tV_LowN, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Biomass, mol L^{-1}')  
   
@@ -140,6 +148,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tXC_LowP(:,1), tXC_LowP(:,2), SD.tXC_LowP, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Carbon concentration, \mumol L^{-1}')
   
@@ -148,6 +157,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tXN_LowP(:,1), tXN_LowP(:,2), SD.tXN_LowP, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Nitrogen concentration, \mumol L^{-1}')
   title('Low P medium experiment')
@@ -158,6 +168,7 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tXP_LowP(:,1), tXP_LowP(:,2), SD.tXP_LowP, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Phosphorous concentration, \mumol L^{-1}')
   
@@ -166,13 +177,29 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   hold on
   errorbar(tV_LowP(:,1), tV_LowP(:,2), SD.tV_LowP, '.r', 'markersize', 20)
   set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
   xlabel('time, days')
   ylabel('Biomass, mol L^{-1}')  
   
-%   for i=4:6
-%    subplot(3,3,i)
-%    plot(Pt, Preserve(:,i-3), 'g','linewidth', 4)
-%    set(gca, 'Fontsize', 15, 'Box', 'on')
-%    xlabel('time, days')
-%    ylabel('Reserve density, mol molM_V^{-1}')
-%   end
+  
+  figure(4) % figure to show results of uni-variate data for pro99
+  subplot(2,3,1)
+  plot(t, StVar_pro99(:,4), 'g', t, StVar_LowN(:,4), 'b', t, StVar_LowP(:,4), 'k', 'linewidth', 2)
+  xlabel('time, days')
+  ylabel('Carbon density reserve, mol E_C/ mol V')
+  
+  subplot(2,3,2)
+  plot(t, StVar_pro99(:,5), 'g', t, StVar_LowN(:,5), 'b', t, StVar_LowP(:,5), 'k', 'linewidth', 2)
+  xlabel('time, days')
+  ylabel('Nitrogen density reserve, mol E_N/ mol V')
+
+  subplot(2,3,3)
+  plot(t, StVar_pro99(:,6), 'g', t, StVar_LowN(:,6), 'b', t, StVar_LowP(:,6), 'k', 'linewidth', 2)
+  xlabel('time, days')
+  ylabel('Phosphorous density reserve, mol E_P/ mol V')
+
+  subplot(2,3,4)
+  plot(t, StVar_pro99(:,7), 'g', t, StVar_LowN(:,7), 'b', t, StVar_LowP(:,7), 'k', 'linewidth', 2)
+  xlabel('time, days')
+  ylabel('Structure, mol')
+

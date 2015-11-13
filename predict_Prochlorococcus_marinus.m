@@ -2,10 +2,22 @@
 % Obtains predictions, using parameters and data
 
 %%
-function [prdData, info] = predict_Prochlorococcus_marinus(par, data, auxData)
+function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochlorococcus_marinus(par, data, auxData)
   
   %% unpack par, data and auxData
   vars_pull(par); vars_pull(data);  vars_pull(auxData);
+  
+  filterChecks = y_EN_V < n_NV || y_EP_V < n_PV  || ...     % mass conservation
+                 n_HV >= 263/106 || n_OV >= 10/106 || n_NV >= 16/106 || n_PV >= 1/106 || ...     % assuming there is some reserve in Redfield ratio
+                 kappaEC < 0 || kappaEC > 1 || kappaEN < 0 || kappaEN > 1 || kappaEP < 0 || kappaEP > 1 || ...  % energy conservation
+                 kappaXC < 0 || kappaXC > 1 || kappaXN < 0 || kappaXN > 1 || kappaXP < 0 || kappaXP > 1;        % energy conservation
+  
+  if filterChecks  
+    info = 0;
+    prdData = {};
+    return;
+  end  
+  
   
   %       V        E_C  E_N  E_P
   n_O = [n_CV, n_CEC, n_CEN, n_CEP;  % C/C, equals 1 by definition
@@ -69,9 +81,9 @@ function [prdData, info] = predict_Prochlorococcus_marinus(par, data, auxData)
 %   one_cell_biomass = sum([q_C q_N q_P])*w_V;
 %   biomass0 = par.one_cell_biomass*1307055054;
   
-  data0_pro99 = [3000*1e-6, 800*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1754635926]; 
-  data0_LowN = [3000*1e-6, 100*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1307055054]; 
-  data0_LowP = [3000*1e-6, 800*1e-6, 50/8*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1.0381e+09]; 
+  data0_pro99 = [3000*1e-6, 800*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1754635926 /100]; 
+  data0_LowN = [3000*1e-6, 100*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1307055054 /100]; 
+  data0_LowP = [3000*1e-6, 800*1e-6, 50/8*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1.0381e+09 /100]; 
 %   data0 = [3000*1e-6, 800*1e-6, 50*1e-6, 3.83e-15/4.16e-15, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1754635926 ];
 %  data0 = [3000*1e-6, 800*1e-6, 50*1e-6, 3.83e-15/4.16e-15, 6.71e-16/4.16e-15, 6.29e-17/4.16e-15, 4.16e-15];
 
