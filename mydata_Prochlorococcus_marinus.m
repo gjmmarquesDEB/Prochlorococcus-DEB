@@ -33,7 +33,7 @@ metaData.address  = {'University of Haifa, Israel'};        % affiliation, postc
 % zero-variate data;
 
 % % growth rates
-% data.r_max=0.71;   units.r_max='day^{-1}';   label.r_max='maximum growth rate';  bibkey.r_max='Anon2015'; temp.r_max = T_C+22; % Lin et al. 2013
+% data.r_max = 0.71;   units.r_max = 'day^{-1}';   label.r_max = 'maximum growth rate';  bibkey.r_max = 'Anon2015'; temp.r_max = T_C+22; % Lin et al. 2013
 %  
 % % division
 % data.td=1;     units.td='day^{-1}';    label.td='time of division';  bibkey.td='Anon2015'; temp.td=T_C+22;  
