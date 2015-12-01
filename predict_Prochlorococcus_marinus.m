@@ -5,19 +5,27 @@
 function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochlorococcus_marinus(par, data, auxData)
   
   %% unpack par, data and auxData
-  vars_pull(par); vars_pull(data);  vars_pull(auxData);
+  vars_pull(par); vars_pull(data); vars_pull(auxData);
   
+  m_ECm = (j_EC_Am - kappaEC * j_EC_M)/ (1 - kappaEC)/ k_E;
+  m_ENm = (j_EN_Am - kappaEN * j_EN_M)/ (1 - kappaEN)/ k_E;
+  m_EPm = (j_EP_Am - kappaEP * j_EP_M)/ (1 - kappaEP)/ k_E;
+
   filterChecks = y_EN_V < n_NV || y_EP_V < n_PV  || ...     % mass conservation
-                 n_HV >= 263/106 || n_OV >= 10/106 || n_NV >= 16/106 || n_PV >= 1/106 || ...     % assuming there is some reserve in Redfield ratio
+                 n_HV > 263/106 || n_OV > 10/106 || n_NV > 16/106 || n_PV > 1/106 || ...     % assuming there is some reserve in Redfield ratio
+                 j_EC_Am < j_EC_M || j_EN_Am < j_EN_M || j_EP_Am < j_EP_M || ...                 % species survival
+                 k_E < 0.71 || ...                                                               % r_max = 0.71
+                 j_EC_Am < 1.1 * j_EC_M || j_EN_Am < 1.1 * j_EN_M || j_EP_Am < 1.1 * j_EP_M || ...              % species survival
                  kappaEC < 0 || kappaEC > 1 || kappaEN < 0 || kappaEN > 1 || kappaEP < 0 || kappaEP > 1 || ...  % energy conservation
-                 kappaXC < 0 || kappaXC > 1 || kappaXN < 0 || kappaXN > 1 || kappaXP < 0 || kappaXP > 1;        % energy conservation
+                 kappaXC < 0 || kappaXC > 1 || kappaXN < 0 || kappaXN > 1 || kappaXP < 0 || kappaXP > 1 || ...
+                 m_ECm > 100 || m_ENm > 10 || m_EPm > 20;        % energy conservation
   
+             
   if filterChecks  
     info = 0;
     prdData = {};
     return;
   end  
-  
   
   %       V        E_C  E_N  E_P
   n_O = [n_CV, n_CEC, n_CEN, n_CEP;  % C/C, equals 1 by definition
@@ -72,18 +80,22 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   q_P_min = q_N_min/ n_O(4,1) * n_O(5,1); % mol cell-1, minimum P quota for averge cell
   q_C_min = q_N_min/ n_O(4,1);            % mol cell-1, minimum C quota for averge cell
   
+  %N_in_V = q_N_min * 0.9;
+  
+  % mEi = q_i/M_V - n_iV
+  
   M_V0  = q_C_min;     % C-moles, initial structure of average cell 
   M_EC0 = q_C-q_C_min; % C-moles, initial C reserve of average cell  
-  M_EN0 = q_N-q_N_min; % N-moles, initial N reserve of average cell 
-  M_EP0 = q_P-q_P_min; % P-moles, initial P reserve of average cell 
+  M_EN0 = (q_N-q_N_min); % N-moles, initial N reserve of average cell 
+  M_EP0 = (q_P-q_P_min) * 500; % P-moles, initial P reserve of average cell 
   
 %   M_V0 = sum([q_C_min q_N_min q_P_min])*w_V*1307055054;
 %   one_cell_biomass = sum([q_C q_N q_P])*w_V;
 %   biomass0 = par.one_cell_biomass*1307055054;
   
-  data0_pro99 = [3000*1e-6, 800*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1754635926 /100]; 
-  data0_LowN = [3000*1e-6, 100*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1307055054 /100]; 
-  data0_LowP = [3000*1e-6, 800*1e-6, 50/8*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1.0381e+09 /100]; 
+  data0_pro99 = [3000*1e-6, 800*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1754635926 /500]; 
+  data0_LowN = [3000*1e-6, 100*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1307055054 /500]; 
+  data0_LowP = [3000*1e-6, 800*1e-6, 50/8*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1.0381e+09 /500]; 
 %   data0 = [3000*1e-6, 800*1e-6, 50*1e-6, 3.83e-15/4.16e-15, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1754635926 ];
 %  data0 = [3000*1e-6, 800*1e-6, 50*1e-6, 3.83e-15/4.16e-15, 6.71e-16/4.16e-15, 6.29e-17/4.16e-15, 4.16e-15];
 

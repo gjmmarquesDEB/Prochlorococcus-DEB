@@ -22,7 +22,7 @@ estim_options('default'); % runs estimation, uses nmregr method and filter
 
 estim_options('max_step_number',8e2); % set options for parameter estimation
 estim_options('max_fun_evals',5e3);  % set options for parameter estimation
-estim_options('simplex_size', -0.05);
+estim_options('simplex_size', +0.05);
 
 estim_options('pars_init_method', 1);
 estim_options('pseudodata_pets', 2);
