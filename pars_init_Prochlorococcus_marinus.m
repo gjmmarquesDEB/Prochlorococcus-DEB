@@ -14,7 +14,7 @@ par.T_ref = C2K(20);    free.T_ref = 0;    units.T_ref = 'K';        label.T_ref
 % par.z = 1;                                          free.z = 1;         units.z = '-';                                        label.z = 'z';          % zoom factor; for z = 1: L_m = 1 cm
 par.alph = .365;                                            free.alph = 0;      units.alph = 'mol photons (uE m-2)-1 molMv-1 d-1 ';   label.alph='alpha';        % photon flux coefficient
 par.K_C = .000165/10;                                       free.K_C = 0;       units.K_C='M';                                        label.K_C='K_C';             % Mikhaelis-Menten const. Palinska
-par.K_N = .00000011;                                        free.K_N = 0;       units.K_N='M';                                        label.K_N='K_N';             % Mikhaelis-Menten const. Maranon (Litchman)
+par.K_N = .000011;                                        free.K_N = 0;       units.K_N='M';                                        label.K_N='K_N';             % Mikhaelis-Menten const. Maranon (Litchman)
 par.K_P = .0000021;                                         free.K_P = 0;       units.K_P='M';                                        label.K_P='K_P';             % Mikhaelis-Menten const. Krumhardt
 par.j_CO2_Am = 1.068*10.636*1.235e-12*1e-9*60*24/2.6095e-15 * 1e3;free.j_CO2_Am = 0;  units.j_CO2_Am='mol d^{-1}/molM_V';                   label.j_CO2_Am='j_E_CO_2Am';   % CO2 assimilation rates
 % par.j_EC_Am = 6.7648e-016/4.16e-15*1e-3;                    free.j_EC_Am = 0;   units.j_EC_Am='mol d^{-1}/molM_V';                    label.j_EC_Am='j_E_CAm';    % C assimilation rates
@@ -23,18 +23,19 @@ par.j_EC_Am = par.j_EN_Am*5.1 *1e3;                            free.j_EC_Am = 1;
 par.j_EP_Am = .772*.0005*1e-15*24/2.6095e-15 *1.83e3;          free.j_EP_Am = 1;   units.j_EP_Am='mol d^{-1}/molM_V';                    label.j_EP_Am='j_E_PAm';    % P assimilation rates, Krumhardt
 par.k_E = 3.2;                                                 free.k_E = 1;       units.k_E='d^{-1}';                                   label.k_E='k_E';             % reserve turnover rate 2.6 from Lorena... 
 par.y_EC_V = 1.25;                                             free.y_EC_V = 0;    units.y_EC_V='molE_C molM_V^{-1}';                    label.y_EC_V='y_E_CV';      % yield factor of C-reserve to structure
-par.y_EN_V = 16/106/1.5;                                       free.y_EN_V = 0;    units.y_EN_V='molE_N molM_V^{-1}';                    label.y_EN_V='y_E_NV';      % yield factor of N-reserve to structure
-par.y_EP_V = 1/106/1.5;                                        free.y_EP_V = 0;    units.y_EP_V='molE_P molM_V^{-1}';                    label.y_EP_V='y_E_PV';      % yield factor of P-reserve to structure
+par.y_EN_V = 16/106/1;                                       free.y_EN_V = 0;    units.y_EN_V='molE_N molM_V^{-1}';                    label.y_EN_V='y_E_NV';      % yield factor of N-reserve to structure
+par.y_EP_V = 1/106/1;                                        free.y_EP_V = 0;    units.y_EP_V='molE_P molM_V^{-1}';                    label.y_EP_V='y_E_PV';      % yield factor of P-reserve to structure
 % par.j_L = par.alph*par.I;                                      free.j_L = 0;       units.j_L='mol molM_V^{-1} d^{-1}';                   label.j_L='j_L';             % light "assimilation" rate
-par.j_EC_M = .054;                                             free.j_EC_M = 0;    units.j_EC_M='molE_C molM_V^{-1} d^{-1}';             label.j_EC_M='j_E_CM';      % C reserve maintenance rates, from Lorena 
-par.j_EN_M = .012;                                             free.j_EN_M = 0;    units.j_EN_M='molE_N molM_V^{-1} d^{-1}';             label.j_EN_M='j_E_NM';      % N reserve maintenance rates, from Lorena 
-par.j_EP_M = .012*.95;                                         free.j_EP_M = 0;    units.j_EP_M='molE_P molM_V^{-1} d^{-1}';             label.j_EP_M='j_E_PM';      % P reserve maintenance rates, from Lorena 
-par.kappaEC = .75;                                             free.kappaEC = 0;   units.kappaEC='-';                                    label.kappaEC='kappa_E_C'; % kappas - fraction of rejected flux returned into C reserve
-par.kappaEN = .75;                                             free.kappaEN = 0;   units.kappaEN='-';                                    label.kappaEN='kappa_E_N'; % kappas - fraction of rejected flux returned into N reserve
+par.j_EC_M = .054;                                             free.j_EC_M = 1;    units.j_EC_M='molE_C molM_V^{-1} d^{-1}';             label.j_EC_M='j_E_CM';      % C reserve maintenance rates, from Lorena 
+par.j_EN_M = .012;                                             free.j_EN_M = 1;    units.j_EN_M='molE_N molM_V^{-1} d^{-1}';             label.j_EN_M='j_E_NM';      % N reserve maintenance rates, from Lorena 
+par.j_EP_M = .012*.95;                                         free.j_EP_M = 1;    units.j_EP_M='molE_P molM_V^{-1} d^{-1}';             label.j_EP_M='j_E_PM';      % P reserve maintenance rates, from Lorena 
+par.kappaEC = .5;                                              free.kappaEC = 1;   units.kappaEC='-';                                    label.kappaEC='kappa_E_C'; % kappas - fraction of rejected flux returned into C reserve
+par.kappaEN = .75;                                             free.kappaEN = 1;   units.kappaEN='-';                                    label.kappaEN='kappa_E_N'; % kappas - fraction of rejected flux returned into N reserve
 par.kappaEP = .75;                                             free.kappaEP = 1;   units.kappaEP='-';                                    label.kappaEP='kappa_E_P'; % kappas - fraction of rejected flux returned into P reserve
-par.kappaXC = 1;                                               free.kappaXC = 0;   units.kappaXC='-';                                    label.kappaXC='kappa_X_C'; % kappas - fraction of excreted flux added to the assimilable C source
-par.kappaXN = 1;                                               free.kappaXN = 1;   units.kappaXN='-';                                    label.kappaXN='kappa_X_N'; % kappas - fraction of excreted flux added to the assimilable N source
-par.kappaXP = 0.5;                                             free.kappaXP = 1;   units.kappaXP='-';                                    label.kappaXP='kappa_X_P'; % kappas - fraction of excreted flux added to the assimilable P source
+par.kappaXC = 0.8;                                             free.kappaXC = 0;   units.kappaXC='-';                                    label.kappaXC='kappa_X_C'; % kappas - fraction of excreted flux added to the assimilable C source
+par.kappaXN = 0.8;                                             free.kappaXN = 0;   units.kappaXN='-';                                    label.kappaXN='kappa_X_N'; % kappas - fraction of excreted flux added to the assimilable N source
+par.kappaXP = 0.8;                                             free.kappaXP = 0;   units.kappaXP='-';                                    label.kappaXP='kappa_X_P'; % kappas - fraction of excreted flux added to the assimilable P source
+
 
 % Ki = 100.*nominal value
 % plus jEiM = 0.1*nominal value
@@ -77,10 +78,10 @@ par.mu_P = 0;      free.mu_P = 0;  units.mu_P = 'J/ mol'; label.mu_P = 'chemical
 
 % chemical indices for water-free organics from Kooy2010 Fig 4.15 (excluding contributions of H and O atoms from water)
 par.n_CV = 1;       free.n_CV = 0;  units.n_CV = '-'; label.n_CV = 'chem. index of carbon in structure'; % n_CV = 1 by definition
-par.n_HV = 263/106/1.5; free.n_HV = 0;  units.n_HV = '-'; label.n_HV = 'chem. index of hydrogen in structure';
-par.n_OV = 10/106/1.5;  free.n_OV = 0;  units.n_OV = '-'; label.n_OV = 'chem. index of oxygen in structure';
-par.n_NV = 16/106/1.5;  free.n_NV = 0;  units.n_NV = '-'; label.n_NV = 'chem. index of nitrogen in structure';
-par.n_PV = 1/106/1.5;   free.n_PV = 0;  units.n_PV = '-'; label.n_PV = 'chem. index of phosphorous in structure';
+par.n_HV = 263/106/1; free.n_HV = 0;  units.n_HV = '-'; label.n_HV = 'chem. index of hydrogen in structure';
+par.n_OV = 10/106/1;  free.n_OV = 0;  units.n_OV = '-'; label.n_OV = 'chem. index of oxygen in structure';
+par.n_NV = 16/106/1;  free.n_NV = 0;  units.n_NV = '-'; label.n_NV = 'chem. index of nitrogen in structure';
+par.n_PV = 1/106/1;   free.n_PV = 0;  units.n_PV = '-'; label.n_PV = 'chem. index of phosphorous in structure';
 %
 par.n_CEC = 1;    free.n_CEC = 0;  units.n_CEC = '-'; label.n_CEC = 'chem. index of carbon in carbon reserve';   % n_CE = 1 by definition
 par.n_HEC = 2;    free.n_HEC = 0;  units.n_HEC = '-'; label.n_HEC = 'chem. index of hydrogen in carbon reserve';
