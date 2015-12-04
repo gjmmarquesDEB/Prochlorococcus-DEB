@@ -10,6 +10,9 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   m_ECm = (j_EC_Am - kappaEC * j_EC_M)/ (1 - kappaEC)/ k_E;
   m_ENm = (j_EN_Am - kappaEN * j_EN_M)/ (1 - kappaEN)/ k_E;
   m_EPm = (j_EP_Am - kappaEP * j_EP_M)/ (1 - kappaEP)/ k_E;
+  
+  RR_Nm = n_NV + m_ENm;
+  RR_Pm = n_PV + m_EPm;
 
   filterChecks = y_EN_V < n_NV || y_EP_V < n_PV  || ...     % mass conservation
                  n_HV > 263/106 || n_OV > 10/106 || n_NV > 16/106 || n_PV > 1/106 || ...     % assuming there is some reserve in Redfield ratio
@@ -18,6 +21,7 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
                  j_EC_Am < 1.1 * j_EC_M || j_EN_Am < 1.1 * j_EN_M || j_EP_Am < 1.1 * j_EP_M || ...              % species survival
                  kappaEC < 0 || kappaEC > 1 || kappaEN < 0 || kappaEN > 1 || kappaEP < 0 || kappaEP > 1 || ...  % energy conservation
                  kappaXC < 0 || kappaXC > 1 || kappaXN < 0 || kappaXN > 1 || kappaXP < 0 || kappaXP > 1 || ...
+                 RR_Nm * 106/16 > 5 || RR_Pm * 106 > 5 || ...
                  m_ECm > 100 || m_ENm > 10 || m_EPm > 20;        % energy conservation
   
              
@@ -87,7 +91,7 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   M_V0  = q_C_min;     % C-moles, initial structure of average cell 
   M_EC0 = q_C-q_C_min; % C-moles, initial C reserve of average cell  
   M_EN0 = (q_N-q_N_min); % N-moles, initial N reserve of average cell 
-  M_EP0 = (q_P-q_P_min) * 500; % P-moles, initial P reserve of average cell 
+  M_EP0 = (q_P-q_P_min); % P-moles, initial P reserve of average cell 
   
 %   M_V0 = sum([q_C_min q_N_min q_P_min])*w_V*1307055054;
 %   one_cell_biomass = sum([q_C q_N q_P])*w_V;
@@ -226,17 +230,20 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   prdData.tXN_pro99 = XNut_pro99(pos_N_pro99, 2) * 1e6; % concentration in muM
   prdData.tXP_pro99 = XNut_pro99(pos_N_pro99, 3) * 1e6; % concentration in muM
   prdData.tXC_pro99 = XNut_pro99(pos_C_pro99, 1) * 1e6; % concentration in muM
-  prdData.tV_pro99 = w_V*XNut_pro99(pos_V_pro99, 7) + w_EC*XNut_pro99(pos_V_pro99, 4).*XNut_pro99(pos_V_pro99, 7) + w_EN*XNut_pro99(pos_V_pro99, 5).*XNut_pro99(pos_V_pro99, 7)+ w_EP*XNut_pro99(pos_V_pro99, 6).*XNut_pro99(pos_V_pro99, 7);       % biomass in mols
+  prdData.tV_pro99 = XNut_pro99(pos_V_pro99, 7) .* (1 + XNut_pro99(pos_V_pro99, 4));       % biomass in mols
+%  prdData.tV_pro99 = w_V*XNut_pro99(pos_V_pro99, 7) + w_EC*XNut_pro99(pos_V_pro99, 4).*XNut_pro99(pos_V_pro99, 7) + w_EN*XNut_pro99(pos_V_pro99, 5).*XNut_pro99(pos_V_pro99, 7)+ w_EP*XNut_pro99(pos_V_pro99, 6).*XNut_pro99(pos_V_pro99, 7);       % biomass in mols
 
   prdData.tXN_LowN = XNut_LowN(pos_N_LowN, 2) * 1e6; % concentration in muM
   prdData.tXP_LowN = XNut_LowN(pos_N_LowN, 3) * 1e6; % concentration in muM
   prdData.tXC_LowN = XNut_LowN(pos_C_LowN, 1) * 1e6; % concentration in muM
-  prdData.tV_LowN = w_V*XNut_LowN(pos_V_LowN, 7) + w_EC*XNut_LowN(pos_V_LowN, 4).*XNut_LowN(pos_V_LowN, 7) + w_EN*XNut_LowN(pos_V_LowN, 5).*XNut_LowN(pos_V_LowN, 7)+ w_EP*XNut_LowN(pos_V_LowN, 6).*XNut_LowN(pos_V_LowN, 7);       % biomass in mols
+  prdData.tV_LowN = XNut_LowN(pos_V_LowN, 7) .* (1 + w_EC*XNut_LowN(pos_V_LowN, 4));       % biomass in mols
+%   prdData.tV_LowN = w_V*XNut_LowN(pos_V_LowN, 7) + w_EC*XNut_LowN(pos_V_LowN, 4).*XNut_LowN(pos_V_LowN, 7) + w_EN*XNut_LowN(pos_V_LowN, 5).*XNut_LowN(pos_V_LowN, 7)+ w_EP*XNut_LowN(pos_V_LowN, 6).*XNut_LowN(pos_V_LowN, 7);       % biomass in mols
 
   prdData.tXN_LowP = XNut_LowP(pos_N_LowP, 2) * 1e6; % concentration in muM
   prdData.tXP_LowP = XNut_LowP(pos_N_LowP, 3) * 1e6; % concentration in muM
   prdData.tXC_LowP = XNut_LowP(pos_C_LowP, 1) * 1e6; % concentration in muM
-  prdData.tV_LowP = w_V*XNut_LowP(pos_V_LowP, 7) + w_EC*XNut_LowP(pos_V_LowP, 4).*XNut_LowP(pos_V_LowP, 7) + w_EN*XNut_LowP(pos_V_LowP, 5).*XNut_LowP(pos_V_LowP, 7)+ w_EP*XNut_LowP(pos_V_LowP, 6).*XNut_LowP(pos_V_LowP, 7);       % biomass in mols
+  prdData.tV_LowP = XNut_LowP(pos_V_LowP, 7) .* (1 + w_EC*XNut_LowP(pos_V_LowP, 4));       % biomass in mols
+%   prdData.tV_LowP = w_V*XNut_LowP(pos_V_LowP, 7) + w_EC*XNut_LowP(pos_V_LowP, 4).*XNut_LowP(pos_V_LowP, 7) + w_EN*XNut_LowP(pos_V_LowP, 5).*XNut_LowP(pos_V_LowP, 7)+ w_EP*XNut_LowP(pos_V_LowP, 6).*XNut_LowP(pos_V_LowP, 7);       % biomass in mols
 
   %   prdData.reserve=Reserve;
   
