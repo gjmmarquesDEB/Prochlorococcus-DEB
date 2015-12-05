@@ -21,10 +21,21 @@ j_EN_A=j_EN_Am*N./(N+K_N);
 j_EP_A=j_EP_Am*P./(P+K_P);
 
 % finding r...
-fun=@(r) findr1(r,par,m_EC,m_EN,m_EP); % function 
+fun=@(r) findr1(r,par,m_EC,m_EN,m_EP); % function
 r0=0; % initial point
-r=fzero(fun,r0);
-
+% m_EC
+% m_EN
+% m_EP
+% j_EC_G = m_EC * (par.k_E - r0) - par.j_EC_M
+% j_EN_G = m_EN * (par.k_E - r0) - par.j_EN_M
+% j_EP_G = m_EP * (par.k_E - r0) - par.j_EP_M
+% fun(r0)
+if m_EC < 0 || m_EN < 0 || m_EP < 0
+  r = -1000;
+else
+  r=fzero(fun,r0);
+end
+  
 % mobilisation rates
 j_EC_C=m_EC*(k_E-r); j_EN_C=m_EN*(k_E-r); j_EP_C=m_EP*(k_E-r); 
 j_EC_R=j_EC_C-j_EC_M-y_EC_V*r; j_EN_R=j_EN_C-j_EN_M-y_EN_V*r; j_EP_R=j_EP_C-j_EP_M-y_EP_V*r;
@@ -36,9 +47,9 @@ n_O = [1,        1,   0,   0;  % C/C, equals 1 by definition
           1/106,    0,   0,   1];
    
 % the differential equatons
-diff_DEB(1) = (-j_EC_A + (y_EC_V-n_O(1,1))*r + kappaEC * (1-kappaEC)*j_EC_R) * M_V; 
-diff_DEB(2) = (-j_EN_A + (y_EN_V-n_O(4,1))*r + kappaEN * (1-kappaEN)*j_EN_R) * M_V; 
-diff_DEB(3) = (-j_EP_A + (y_EP_V-n_O(5,1))*r + kappaEP * (1-kappaEP)*j_EP_R) * M_V; 
+diff_DEB(1) = (-j_EC_A + (y_EC_V-n_O(1,1))*r + kappaXC * (1-kappaEC)*j_EC_R) * M_V; 
+diff_DEB(2) = (-j_EN_A + (y_EN_V-n_O(4,1))*r + kappaXN * (1-kappaEN)*j_EN_R) * M_V; 
+diff_DEB(3) = (-j_EP_A + (y_EP_V-n_O(5,1))*r + kappaXP * (1-kappaEP)*j_EP_R) * M_V; 
 diff_DEB(4) = j_EC_A - j_EC_C + kappaEC*j_EC_R - r*m_EC;
 diff_DEB(5) = j_EN_A - j_EN_C + kappaEN*j_EN_R - r*m_EN;
 diff_DEB(6) = j_EP_A - j_EP_C + kappaEP*j_EP_R - r*m_EP;
