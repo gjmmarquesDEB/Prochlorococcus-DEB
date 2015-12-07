@@ -14,15 +14,14 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   RR_Nm = n_NV + m_ENm;
   RR_Pm = n_PV + m_EPm;
 
-  filterChecks = y_EN_V < n_NV || y_EP_V < n_PV  || ...     % mass conservation
-                 n_HV > 263/106 || n_OV > 10/106 || n_NV > 16/106 || n_PV > 1/106 || ...     % assuming there is some reserve in Redfield ratio
+  filterChecks = y_EN_V < n_NV || y_EP_V < n_PV  || ...     % mass conservation  n_HV > 263/106 || n_OV > 10/106 || n_NV > 16/106 || n_PV > 1/106 || ...     % assuming there is some reserve in Redfield ratio
                  j_EC_Am < j_EC_M || j_EN_Am < j_EN_M || j_EP_Am < j_EP_M || ...                 % species survival
-                 k_E < 0.71 || ...                                                               % r_max = 0.71
+                 k_E < 0.52 || ...                                                               % r_max = 0.71
                  j_EC_Am < 1.1 * j_EC_M || j_EN_Am < 1.1 * j_EN_M || j_EP_Am < 1.1 * j_EP_M || ...              % species survival
                  kappaEC < 0 || kappaEC > 1 || kappaEN < 0 || kappaEN > 1 || kappaEP < 0 || kappaEP > 1 || ...  % energy conservation
                  kappaXC < 0 || kappaXC > 1 || kappaXN < 0 || kappaXN > 1 || kappaXP < 0 || kappaXP > 1 || ...
-                 RR_Nm * 106/16 > 5 || RR_Pm * 106 > 5 || ...
-                 m_ECm > 100 || m_ENm > 10 || m_EPm > 20;        % energy conservation
+                 RR_Nm * 106/16 > 7 || RR_Pm * 106 > 7 || ...                 %m_ECm > 100 || ...
+                 m_ENm > 10 || m_EPm > 20;        % energy conservation
   
              
   if filterChecks  
@@ -88,20 +87,30 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   
   % mEi = q_i/M_V - n_iV
   
-  M_V0  = q_C_min;     % C-moles, initial structure of average cell 
-  M_EC0 = q_C-q_C_min; % C-moles, initial C reserve of average cell  
-  M_EN0 = (q_N-q_N_min); % N-moles, initial N reserve of average cell 
-  M_EP0 = (q_P-q_P_min); % P-moles, initial P reserve of average cell 
+  M_V0  = q_C_min/2;     % C-moles, initial structure of average cell 
+  M_EC0 = (q_C-q_C_min)*2; % C-moles, initial C reserve of average cell  
+  M_EN0 = (q_N-q_N_min)/10; % N-moles, initial N reserve of average cell 
+  M_EP0 = (q_P-q_P_min)/20; % P-moles, initial P reserve of average cell 
   
 %   M_V0 = sum([q_C_min q_N_min q_P_min])*w_V*1307055054;
 %   one_cell_biomass = sum([q_C q_N q_P])*w_V;
 %   biomass0 = par.one_cell_biomass*1307055054;
   
-  data0_pro99 = [3000*1e-6, 800*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1754635926 /500]; 
-  data0_LowN = [3000*1e-6, 100*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1307055054 /500]; 
-  data0_LowP = [3000*1e-6, 800*1e-6, 50/8*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1.0381e+09 /500]; 
+  data0_pro99 = [3000*1e-6, 800*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1754635926]; 
+  data0_LowN = [3000*1e-6, 100*1e-6, 50*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1307055054/10]; 
+  data0_LowP = [3000*1e-6, 800*1e-6, 50/8*1e-6, M_EC0/ M_V0, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1.0381e+09/10]; 
 %   data0 = [3000*1e-6, 800*1e-6, 50*1e-6, 3.83e-15/4.16e-15, M_EN0/ M_V0, M_EP0/ M_V0, M_V0 * 1754635926 ];
 %  data0 = [3000*1e-6, 800*1e-6, 50*1e-6, 3.83e-15/4.16e-15, 6.71e-16/4.16e-15, 6.29e-17/4.16e-15, 4.16e-15];
+
+  C_init = 0.5e-5; r = 0.4;
+  m_EC0 = (j_EC_Am - kappaEC * j_EC_M - kappaEC * y_EC_V * r)/ ((1 - kappaEC) * k_E + kappaEC * r);
+  m_EN0 = (j_EN_Am - kappaEN * j_EN_M - kappaEN * y_EN_V * r)/ ((1 - kappaEN) * k_E + kappaEN * r);
+  m_EP0 = (j_EP_Am - kappaEP * j_EP_M - kappaEP * y_EP_V * r)/ ((1 - kappaEP) * k_E + kappaEP * r);
+  M_V0 = C_init/ (1 + m_EC0);
+  
+  data0_pro99 = [3000*1e-6, 800*1e-6, 50*1e-6, m_EC0, m_EN0, m_EP0, M_V0]; 
+  data0_LowN = [3000*1e-6, 100*1e-6, 50*1e-6, m_EC0, m_EN0, m_EP0, M_V0]; 
+  data0_LowP = [3000*1e-6, 800*1e-6, 50/8*1e-6, m_EC0, m_EN0, m_EP0, M_V0]; 
 
   tfkeep = 1;
   % HCO3- additions (1 mM) on days: 5, 11, 18 
@@ -118,7 +127,8 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   tvec_pro99 = tAll_pro99;  tvec_LowN = tAll_LowN;  tvec_LowP = tAll_LowP;
   tvec_pro99 = tvec_pro99(tvec_pro99 <= tinput(1));  tvec_LowN = tvec_LowN(tvec_LowN <= tinput(1));  tvec_LowP = tvec_LowP(tvec_LowP <= tinput(1));
   
-  options = odeset('NonNegative', 3);
+  %options = odeset('NonNegative', [1, 2, 3, 4, 5, 6, 7]);
+  options = odeset('RelTol', 1e-6);
   for i = 1:length(tinput) + 1
     if ~tfkeep
       tTot_pro99(end) = [];
@@ -126,10 +136,12 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
     end
       
     if i == length(tinput) + 1 || tvec_pro99(end) == tinput(i)
-      [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_pro99, data0_pro99, options);
+%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_pro99, data0_pro99, options);
+      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_pro99, data0_pro99, options);
       tfkeep = 1;
     else
-      [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_pro99, tinput(i)], data0_pro99, options);
+%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_pro99, tinput(i)], data0_pro99, options);
+      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), [tvec_pro99, tinput(i)], data0_pro99, options);
       tfkeep = 0;
     end
     if length(tvec_pro99) > 2
@@ -161,10 +173,12 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
     end
       
     if i == length(tinput) + 1 || tvec_LowN(end) == tinput(i)
-      [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowN, data0_LowN, options);
+%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowN, data0_LowN, options);
+      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowN, data0_LowN, options);
       tfkeep = 1;
     else
-      [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowN, tinput(i)], data0_LowN, options);
+%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowN, tinput(i)], data0_LowN, options);
+      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowN, tinput(i)], data0_LowN, options);
       tfkeep = 0;
     end
     if length(tvec_pro99) > 2
@@ -196,10 +210,12 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
     end
       
     if i == length(tinput) + 1 || tvec_LowP(end) == tinput(i)
-      [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
+%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
+      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
       tfkeep = 1;
     else
-      [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowP, tinput(i)], data0_LowP, options);
+%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowP, tinput(i)], data0_LowP, options);
+      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowP, tinput(i)], data0_LowP, options);
       tfkeep = 0;
     end
     if length(tvec_LowP) > 2
@@ -236,13 +252,13 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   prdData.tXN_LowN = XNut_LowN(pos_N_LowN, 2) * 1e6; % concentration in muM
   prdData.tXP_LowN = XNut_LowN(pos_N_LowN, 3) * 1e6; % concentration in muM
   prdData.tXC_LowN = XNut_LowN(pos_C_LowN, 1) * 1e6; % concentration in muM
-  prdData.tV_LowN = XNut_LowN(pos_V_LowN, 7) .* (1 + w_EC*XNut_LowN(pos_V_LowN, 4));       % biomass in mols
+  prdData.tV_LowN = XNut_LowN(pos_V_LowN, 7) .* (1 + XNut_LowN(pos_V_LowN, 4));       % biomass in mols
 %   prdData.tV_LowN = w_V*XNut_LowN(pos_V_LowN, 7) + w_EC*XNut_LowN(pos_V_LowN, 4).*XNut_LowN(pos_V_LowN, 7) + w_EN*XNut_LowN(pos_V_LowN, 5).*XNut_LowN(pos_V_LowN, 7)+ w_EP*XNut_LowN(pos_V_LowN, 6).*XNut_LowN(pos_V_LowN, 7);       % biomass in mols
 
   prdData.tXN_LowP = XNut_LowP(pos_N_LowP, 2) * 1e6; % concentration in muM
   prdData.tXP_LowP = XNut_LowP(pos_N_LowP, 3) * 1e6; % concentration in muM
   prdData.tXC_LowP = XNut_LowP(pos_C_LowP, 1) * 1e6; % concentration in muM
-  prdData.tV_LowP = XNut_LowP(pos_V_LowP, 7) .* (1 + w_EC*XNut_LowP(pos_V_LowP, 4));       % biomass in mols
+  prdData.tV_LowP = XNut_LowP(pos_V_LowP, 7) .* (1 + XNut_LowP(pos_V_LowP, 4));       % biomass in mols
 %   prdData.tV_LowP = w_V*XNut_LowP(pos_V_LowP, 7) + w_EC*XNut_LowP(pos_V_LowP, 4).*XNut_LowP(pos_V_LowP, 7) + w_EN*XNut_LowP(pos_V_LowP, 5).*XNut_LowP(pos_V_LowP, 7)+ w_EP*XNut_LowP(pos_V_LowP, 6).*XNut_LowP(pos_V_LowP, 7);       % biomass in mols
 
   %   prdData.reserve=Reserve;

@@ -2,7 +2,7 @@
 % presents results of univariate data graphically
 
 %%
-function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
+function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   % created by Starrlight Augustine, Dina Lika, Bas Kooijman, Goncalo Marques and Laure Pecquerie 2015/04/12
 
   %% Syntax
@@ -102,6 +102,14 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   xlim([0, 25])
   xlabel('time, days')
   ylabel('Biomass, mol L^{-1}')  
+
+  subplot(2,3,5)
+  plot(t, V_pro99, 'g', t, V_pro99 + EXC_pro99 * 1e-6, 'b', 'linewidth', 4)
+  set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
+  xlabel('time, days')
+  ylabel('Biomass + Carbon concentration, mol L^{-1}')  
+
   
   figure(2) % figure to show results of uni-variate data for LowN
   subplot(2,3,1)
@@ -141,6 +149,13 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   xlim([0, 25])
   xlabel('time, days')
   ylabel('Biomass, mol L^{-1}')  
+
+  subplot(2,3,5)
+  plot(t, V_LowN, 'g', t, V_LowN + EXC_LowN * 1e-6, 'b', 'linewidth', 4)
+  set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
+  xlabel('time, days')
+  ylabel('Biomass + Carbon concentration, mol L^{-1}')  
   
   figure(3) % figure to show results of uni-variate data for LowP
   subplot(2,3,1)
@@ -181,6 +196,12 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   xlabel('time, days')
   ylabel('Biomass, mol L^{-1}')  
   
+  subplot(2,3,5)
+  plot(t, V_LowP, 'g', t, V_LowP + EXC_LowP * 1e-6, 'b', 'linewidth', 4)
+  set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 25])
+  xlabel('time, days')
+  ylabel('Biomass + Carbon concentration, mol L^{-1}')  
   
   figure(4) % figure to show results of uni-variate data for pro99
   subplot(2,3,1)
@@ -206,10 +227,35 @@ function results_Prochlorococcus_marinus(par, metaPar, data, txtData, auxData)
   subplot(2,3,5)
   plot(t, (par.n_PV + StVar_pro99(:,5))./(1 + StVar_pro99(:,4)) *106, 'g', t, (par.n_PV + StVar_LowN(:,5))./(1 + StVar_pro99(:,4)) *106, 'b', t, (par.n_PV + StVar_LowP(:,5))./(1 + StVar_pro99(:,4)) *106, 'k', 'linewidth', 2)
   xlabel('time, days')
-  ylabel('Phosphorous Redfield ratio proportion, -')
+  ylabel('Nitrogen Redfield ratio proportion, -')
   
   subplot(2,3,6)
   plot(t, (par.n_PV + StVar_pro99(:,6))./(1 + StVar_pro99(:,4)) *106, 'g', t, (par.n_PV + StVar_LowN(:,6))./(1 + StVar_pro99(:,4)) *106, 'b', t, (par.n_PV + StVar_LowP(:,6))./(1 + StVar_pro99(:,4)) *106, 'k', 'linewidth', 2)
   xlabel('time, days')
   ylabel('Phosphorous Redfield ratio proportion, -')
+  
+  figure(5) % figure to show results of uni-variate data for pro99
+  subplot(2,3,1)
+  plot(t, 0.5e-5*exp(0.4 * t), 'm', 'linewidth', 4)
+  hold on
+  errorbar(tV_pro99(:,1), tV_pro99(:,2), SD.tV_pro99, '.r', 'markersize', 20)
+  errorbar(tV_LowN(:,1), tV_LowN(:,2), SD.tV_LowN, '.b', 'markersize', 20)
+  errorbar(tV_LowP(:,1), tV_LowP(:,2), SD.tV_LowP, '.k', 'markersize', 20)
+  set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 10])
+  xlabel('time, days')
+  ylabel('Biomass, mol L^{-1}')  
+
+  subplot(2,3,2)
+  plot(t, 0.5e-5*exp(0.4 * t), 'm', 'linewidth', 4)
+  hold on
+  errorbar(tV_pro99(:,1), tV_pro99(:,2), SD.tV_pro99, '.r', 'markersize', 20)
+  errorbar(tV_LowN(:,1), tV_LowN(:,2), SD.tV_LowN, '.b', 'markersize', 20)
+  errorbar(tV_LowP(:,1), tV_LowP(:,2), SD.tV_LowP, '.k', 'markersize', 20)
+  set(gca, 'Fontsize', 15, 'Box', 'on')
+  xlim([0, 15])
+  xlabel('time, days')
+  ylabel('Biomass, mol L^{-1}')  
+
+
 
