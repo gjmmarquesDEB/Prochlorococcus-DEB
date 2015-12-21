@@ -13,7 +13,7 @@ m_EP=statVar(6); % [C N P] reserves
 M_V=statVar(7); % structure
 
 
-I = 20 ; % light intensity
+I = 20 * exp(- k_ss * M_V) ; % light intensity
 
 % calculated rates: growth (r), j_VM, and....
 j_EC_A=C_assim_1(C,alph*I,K_C,j_CO2_Am,j_EC_Am);

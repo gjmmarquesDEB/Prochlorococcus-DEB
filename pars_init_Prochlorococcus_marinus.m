@@ -34,6 +34,7 @@ par.kappaEP = .5;                                             free.kappaEP = 0; 
 par.kappaXC = 0.95;                                             free.kappaXC = 0;   units.kappaXC='-';                                    label.kappaXC='kappa_X_C'; % kappas - fraction of excreted flux added to the assimilable C source
 par.kappaXN = 0.0;                                             free.kappaXN = 0;   units.kappaXN='-';                                    label.kappaXN='kappa_X_N'; % kappas - fraction of excreted flux added to the assimilable N source
 par.kappaXP = 0.8;                                             free.kappaXP = 0;   units.kappaXP='-';                                    label.kappaXP='kappa_X_P'; % kappas - fraction of excreted flux added to the assimilable P source
+par.k_ss = 4e3;                                              free.k_ss = 0;      units.k_ss='molM_V^{-1}';                            label.k_ss='k_ss';     % self-shading constant
 
 %% auxiliary parameters
 par.T_A   = 7964.5;   free.T_A   = 0;    units.T_A = 'K';        label.T_A = 'T_A';      % Arrhenius temperature
