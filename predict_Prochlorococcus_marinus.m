@@ -142,79 +142,11 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
   XNut_LowP = statVar_values;
   
-  % the Low N experiment
-%   tinput =[5, 11, 18];
-%    for i = 1:length(tinput) + 1
-%     if ~tfkeep
-%       tTot_LowN(end) = [];
-%       XNut_LowN(end,:) = [];
-%     end
-%       
-%     if i == length(tinput) + 1 || tvec_LowN(end) == tinput(i)
-% %       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowN, data0_LowN, options);
-%       [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowN, data0_LowN, options);
-%       tfkeep = 1;
-%     else
-% %       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowN, tinput(i)], data0_LowN, options);
-%       [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowN, tinput(i)], data0_LowN, options);
-%       tfkeep = 0;
-%     end
-%     if length(tvec_pro99) > 2
-%       tTot_LowN = [tTot_LowN; t(2:end)];
-%       XNut_LowN = [XNut_LowN; statVar_values(2:end,:)];
-%     else
-%       tTot_LowN = [tTot_LowN; t(end)];
-%       XNut_LowN = [XNut_LowN; statVar_values(end,:)];
-%     end
-%     % HCO3- additions (1 mM) on days: 5, 11, 18 
-%     if i < length(tinput) + 1
-%       data0_LowN = [statVar_values(end,1)+.001, statVar_values(end,2:7)];
-%        tvec_LowN = tAll_LowN;
-%        tvec_LowN = tvec_LowN(tvec_LowN > tinput(i));
-%        tvec_LowN = [tinput(i), tvec_LowN];
-%     end
-%     if i < length(tinput)
-%       tvec_LowN = tvec_LowN(tvec_LowN <= tinput(i + 1));
-%     end
-% 
-%    end
-   
-%    % the Low P experiment
-%    tinput =[5, 11, 18];
-%   for i = 1:length(tinput) + 1
-%     if ~tfkeep
-%       tTot_LowP(end) = [];
-%       XNut_LowP(end,:) = [];
-%     end
-%       
-%     if i == length(tinput) + 1 || tvec_LowP(end) == tinput(i)
-% %       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
-%       [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
-%       tfkeep = 1;
-%     else
-% %       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowP, tinput(i)], data0_LowP, options);
-%       [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowP, tinput(i)], data0_LowP, options);
-%       tfkeep = 0;
-%     end
-%     if length(tvec_LowP) > 2
-%       tTot_LowP = [tTot_LowP; t(2:end)];
-%       XNut_LowP = [XNut_LowP; statVar_values(2:end,:)];
-%     else
-%       tTot_LowP = [tTot_LowP; t(end)];
-%       XNut_LowP = [XNut_LowP; statVar_values(end,:)];
-%     end
-%     % HCO3- additions (1 mM) on days: 5, 11, 18 
-%     if i < length(tinput) + 1
-%       data0_LowP = [statVar_values(end,1)+.001, statVar_values(end,2:7)];
-%        tvec_LowP = tAll_LowP;
-%        tvec_LowP = tvec_LowP(tvec_LowP > tinput(i));
-%        tvec_LowP = [tinput(i), tvec_LowP];
-%     end
-%     if i < length(tinput)
-%       tvec_LowP = tvec_LowP(tvec_LowP <= tinput(i + 1));
-%     end
-% 
-%   end
+%   RR_N = max(n_NV + StVar_pro99(:,5))./(1 + StVar_pro99(:,4), n_NV + StVar_LowN(:,5))./(1 + StVar_LowN(:,4)), n_NV + StVar_LowP(:,5))./(1 + StVar_LowP(:,4))) * 106;
+%   RR_P = max(n_PV + StVar_pro99(:,6))./(1 + StVar_pro99(:,4), n_PV + StVar_LowN(:,6))./(1 + StVar_LowN(:,4)), n_PV + StVar_LowP(:,6))./(1 + StVar_LowP(:,4))) * 106;
+  
+  
+  
   
 
   %% pack to output

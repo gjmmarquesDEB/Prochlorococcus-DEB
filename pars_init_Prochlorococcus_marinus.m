@@ -17,8 +17,8 @@ par.K_C = .000000165/10;                                       free.K_C = 0;    
 par.K_N = .0000011;                                        free.K_N = 1;       units.K_N='M';                                        label.K_N='K_N';             % Mikhaelis-Menten const. Maranon (Litchman)
 par.K_P = .0000000021;                                         free.K_P = 1;       units.K_P='M';                                        label.K_P='K_P';             % Mikhaelis-Menten const. Krumhardt
 par.j_CO2_Am = 7.7414;                                        free.j_CO2_Am = 0;  units.j_CO2_Am='mol d^{-1}/molM_V';                   label.j_CO2_Am='j_E_CO_2Am';   % CO2 assimilation rates
-par.j_EN_Am = 0.13;                                         free.j_EN_Am = 0;   units.j_EN_Am='mol d^{-1}/molM_V';                    label.j_EN_Am='j_E_NAm';    % N assimilation rates, Maranon
-par.j_EC_Am = par.j_EN_Am*206/16;                            free.j_EC_Am = 1;   units.j_EC_Am='mol d^{-1}/molM_V';                    label.j_EC_Am='j_E_CAm';    % C assimilation rates
+par.j_EN_Am = 0.13;                                         free.j_EN_Am = 1;   units.j_EN_Am='mol d^{-1}/molM_V';                    label.j_EN_Am='j_E_NAm';    % N assimilation rates, Maranon
+par.j_EC_Am = par.j_EN_Am*206/16;                            free.j_EC_Am = 0;   units.j_EC_Am='mol d^{-1}/molM_V';                    label.j_EC_Am='j_E_CAm';    % C assimilation rates
 par.j_EP_Am = par.j_EN_Am/16;                               free.j_EP_Am = 1;   units.j_EP_Am='mol d^{-1}/molM_V';                    label.j_EP_Am='j_E_PAm';    % P assimilation rates, Krumhardt
 par.k_E = 5.2;                                                 free.k_E = 1;       units.k_E='d^{-1}';                                   label.k_E='k_E';             % reserve turnover rate 2.6 from Lorena... 
 par.y_EC_V = 1.25;                                             free.y_EC_V = 0;    units.y_EC_V='molE_C molM_V^{-1}';                    label.y_EC_V='y_E_CV';      % yield factor of C-reserve to structure
