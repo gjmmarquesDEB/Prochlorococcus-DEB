@@ -7,6 +7,9 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   %% unpack par, data and auxData
   vars_pull(par); vars_pull(data); vars_pull(auxData);
   
+  kappaEN = kappaEC; kappaEP = kappaEC;
+  kappaXN = kappaXC; kappaXP = kappaXC;  
+  
   m_ECm = (j_EC_Am - kappaEC * j_EC_M)/ (1 - kappaEC)/ k_E;
   m_ENm = (j_EN_Am - kappaEN * j_EN_M)/ (1 - kappaEN)/ k_E;
   m_EPm = (j_EP_Am - kappaEP * j_EP_M)/ (1 - kappaEP)/ k_E;
