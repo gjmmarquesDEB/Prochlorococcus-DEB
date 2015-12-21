@@ -37,7 +37,7 @@ n_O = [1,        1,   0,   0;  % C/C, equals 1 by definition
           1/106,    0,   0,   1];
    
 % the differential equatons
-diff_DEB(1) = (-j_EC_A + (y_EC_V-n_O(1,1))*r + kappaXC * (1-kappaEC)*j_EC_R) * M_V; 
+diff_DEB(1) = 0; 
 diff_DEB(2) = (-j_EN_A + (y_EN_V-n_O(4,1))*r + kappaXN * (1-kappaEN)*j_EN_R) * M_V; 
 diff_DEB(3) = (-j_EP_A + (y_EP_V-n_O(5,1))*r + kappaXP * (1-kappaEP)*j_EP_R) * M_V; 
 diff_DEB(4) = j_EC_A - j_EC_C + kappaEC*j_EC_R - r*m_EC;

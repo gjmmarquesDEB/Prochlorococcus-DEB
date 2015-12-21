@@ -125,118 +125,93 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   pos_C_pro99 = ismember(tAll_pro99, tXC_pro99(:,1)');   pos_C_LowN = ismember(tAll_LowN, tXC_LowN(:,1)');    pos_C_LowP = ismember(tAll_LowP, tXC_LowP(:,1)');
   pos_V_pro99 = ismember(tAll_pro99, tV_pro99(:,1)');   pos_V_LowN = ismember(tAll_LowN, tV_LowN(:,1)');    pos_V_LowP = ismember(tAll_LowP, tV_LowP(:,1)');
   tvec_pro99 = tAll_pro99;  tvec_LowN = tAll_LowN;  tvec_LowP = tAll_LowP;
-  tvec_pro99 = tvec_pro99(tvec_pro99 <= tinput(1));  tvec_LowN = tvec_LowN(tvec_LowN <= tinput(1));  tvec_LowP = tvec_LowP(tvec_LowP <= tinput(1));
+  %tvec_pro99 = tvec_pro99(tvec_pro99 <= tinput(1));  tvec_LowN = tvec_LowN(tvec_LowN <= tinput(1));  tvec_LowP = tvec_LowP(tvec_LowP <= tinput(1));
   
   %options = odeset('NonNegative', [1, 2, 3, 4, 5, 6, 7]);
   options = odeset('RelTol', 1e-6);
-  for i = 1:length(tinput) + 1
-    if ~tfkeep
-      tTot_pro99(end) = [];
-      XNut_pro99(end,:) = [];
-    end
-      
-    if i == length(tinput) + 1 || tvec_pro99(end) == tinput(i)
-%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_pro99, data0_pro99, options);
-      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_pro99, data0_pro99, options);
-      tfkeep = 1;
-    else
-%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_pro99, tinput(i)], data0_pro99, options);
-      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), [tvec_pro99, tinput(i)], data0_pro99, options);
-      tfkeep = 0;
-    end
-    if length(tvec_pro99) > 2
-      tTot_pro99 = [tTot_pro99; t(2:end)];
-      XNut_pro99 = [XNut_pro99; statVar_values(2:end,:)];
-    else
-      tTot_pro99 = [tTot_pro99; t(end)];
-      XNut_pro99 = [XNut_pro99; statVar_values(end,:)];
-    end
-    % HCO3- additions (1 mM) on days: 5, 11, 18 
-    if i < length(tinput) + 1
-      data0_pro99 = [statVar_values(end,1)+.001, statVar_values(end,2:7)];
-       tvec_pro99 = tAll_pro99;
-       tvec_pro99 = tvec_pro99(tvec_pro99 > tinput(i));
-       tvec_pro99 = [tinput(i), tvec_pro99];
-    end
-    if i < length(tinput)
-      tvec_pro99 = tvec_pro99(tvec_pro99 <= tinput(i + 1));
-    end
-
-  end
+  
+  [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_pro99, data0_pro99, options);
+  XNut_pro99 = statVar_values;
+  
+  [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowN, data0_LowN, options);
+  XNut_LowN = statVar_values;
+  
+  [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
+  XNut_LowP = statVar_values;
   
   % the Low N experiment
-  tinput =[5, 11, 18];
-   for i = 1:length(tinput) + 1
-    if ~tfkeep
-      tTot_LowN(end) = [];
-      XNut_LowN(end,:) = [];
-    end
-      
-    if i == length(tinput) + 1 || tvec_LowN(end) == tinput(i)
-%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowN, data0_LowN, options);
-      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowN, data0_LowN, options);
-      tfkeep = 1;
-    else
-%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowN, tinput(i)], data0_LowN, options);
-      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowN, tinput(i)], data0_LowN, options);
-      tfkeep = 0;
-    end
-    if length(tvec_pro99) > 2
-      tTot_LowN = [tTot_LowN; t(2:end)];
-      XNut_LowN = [XNut_LowN; statVar_values(2:end,:)];
-    else
-      tTot_LowN = [tTot_LowN; t(end)];
-      XNut_LowN = [XNut_LowN; statVar_values(end,:)];
-    end
-    % HCO3- additions (1 mM) on days: 5, 11, 18 
-    if i < length(tinput) + 1
-      data0_LowN = [statVar_values(end,1)+.001, statVar_values(end,2:7)];
-       tvec_LowN = tAll_LowN;
-       tvec_LowN = tvec_LowN(tvec_LowN > tinput(i));
-       tvec_LowN = [tinput(i), tvec_LowN];
-    end
-    if i < length(tinput)
-      tvec_LowN = tvec_LowN(tvec_LowN <= tinput(i + 1));
-    end
-
-   end
+%   tinput =[5, 11, 18];
+%    for i = 1:length(tinput) + 1
+%     if ~tfkeep
+%       tTot_LowN(end) = [];
+%       XNut_LowN(end,:) = [];
+%     end
+%       
+%     if i == length(tinput) + 1 || tvec_LowN(end) == tinput(i)
+% %       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowN, data0_LowN, options);
+%       [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowN, data0_LowN, options);
+%       tfkeep = 1;
+%     else
+% %       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowN, tinput(i)], data0_LowN, options);
+%       [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowN, tinput(i)], data0_LowN, options);
+%       tfkeep = 0;
+%     end
+%     if length(tvec_pro99) > 2
+%       tTot_LowN = [tTot_LowN; t(2:end)];
+%       XNut_LowN = [XNut_LowN; statVar_values(2:end,:)];
+%     else
+%       tTot_LowN = [tTot_LowN; t(end)];
+%       XNut_LowN = [XNut_LowN; statVar_values(end,:)];
+%     end
+%     % HCO3- additions (1 mM) on days: 5, 11, 18 
+%     if i < length(tinput) + 1
+%       data0_LowN = [statVar_values(end,1)+.001, statVar_values(end,2:7)];
+%        tvec_LowN = tAll_LowN;
+%        tvec_LowN = tvec_LowN(tvec_LowN > tinput(i));
+%        tvec_LowN = [tinput(i), tvec_LowN];
+%     end
+%     if i < length(tinput)
+%       tvec_LowN = tvec_LowN(tvec_LowN <= tinput(i + 1));
+%     end
+% 
+%    end
    
-   % the Low P experiment
-   tinput =[5, 11, 18];
-  for i = 1:length(tinput) + 1
-    if ~tfkeep
-      tTot_LowP(end) = [];
-      XNut_LowP(end,:) = [];
-    end
-      
-    if i == length(tinput) + 1 || tvec_LowP(end) == tinput(i)
-%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
-      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
-      tfkeep = 1;
-    else
-%       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowP, tinput(i)], data0_LowP, options);
-      [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowP, tinput(i)], data0_LowP, options);
-      tfkeep = 0;
-    end
-    if length(tvec_LowP) > 2
-      tTot_LowP = [tTot_LowP; t(2:end)];
-      XNut_LowP = [XNut_LowP; statVar_values(2:end,:)];
-    else
-      tTot_LowP = [tTot_LowP; t(end)];
-      XNut_LowP = [XNut_LowP; statVar_values(end,:)];
-    end
-    % HCO3- additions (1 mM) on days: 5, 11, 18 
-    if i < length(tinput) + 1
-      data0_LowP = [statVar_values(end,1)+.001, statVar_values(end,2:7)];
-       tvec_LowP = tAll_LowP;
-       tvec_LowP = tvec_LowP(tvec_LowP > tinput(i));
-       tvec_LowP = [tinput(i), tvec_LowP];
-    end
-    if i < length(tinput)
-      tvec_LowP = tvec_LowP(tvec_LowP <= tinput(i + 1));
-    end
-
-  end
+%    % the Low P experiment
+%    tinput =[5, 11, 18];
+%   for i = 1:length(tinput) + 1
+%     if ~tfkeep
+%       tTot_LowP(end) = [];
+%       XNut_LowP(end,:) = [];
+%     end
+%       
+%     if i == length(tinput) + 1 || tvec_LowP(end) == tinput(i)
+% %       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
+%       [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), tvec_LowP, data0_LowP, options);
+%       tfkeep = 1;
+%     else
+% %       [t, statVar_values] = ode45(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowP, tinput(i)], data0_LowP, options);
+%       [t, statVar_values] = ode23s(@(t, statVar) ProDEB1(t, statVar, par), [tvec_LowP, tinput(i)], data0_LowP, options);
+%       tfkeep = 0;
+%     end
+%     if length(tvec_LowP) > 2
+%       tTot_LowP = [tTot_LowP; t(2:end)];
+%       XNut_LowP = [XNut_LowP; statVar_values(2:end,:)];
+%     else
+%       tTot_LowP = [tTot_LowP; t(end)];
+%       XNut_LowP = [XNut_LowP; statVar_values(end,:)];
+%     end
+%     % HCO3- additions (1 mM) on days: 5, 11, 18 
+%     if i < length(tinput) + 1
+%       data0_LowP = [statVar_values(end,1)+.001, statVar_values(end,2:7)];
+%        tvec_LowP = tAll_LowP;
+%        tvec_LowP = tvec_LowP(tvec_LowP > tinput(i));
+%        tvec_LowP = [tinput(i), tvec_LowP];
+%     end
+%     if i < length(tinput)
+%       tvec_LowP = tvec_LowP(tvec_LowP <= tinput(i + 1));
+%     end
+% 
+%   end
   
 
   %% pack to output

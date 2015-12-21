@@ -26,15 +26,15 @@ par.y_EN_V = 16/106/1;                                       free.y_EN_V = 0;   
 par.y_EP_V = 1/106/1;                                        free.y_EP_V = 0;    units.y_EP_V='molE_P molM_V^{-1}';                    label.y_EP_V='y_E_PV';      % yield factor of P-reserve to structure
 % par.j_L = par.alph*par.I;                                      free.j_L = 0;       units.j_L='mol molM_V^{-1} d^{-1}';                   label.j_L='j_L';             % light "assimilation" rate
 par.j_EC_M = .054;                                             free.j_EC_M = 1;    units.j_EC_M='molE_C molM_V^{-1} d^{-1}';             label.j_EC_M='j_E_CM';      % C reserve maintenance rates, from Lorena 
-par.j_EN_M = .012;                                             free.j_EN_M = 1;    units.j_EN_M='molE_N molM_V^{-1} d^{-1}';             label.j_EN_M='j_E_NM';      % N reserve maintenance rates, from Lorena 
-par.j_EP_M = .012/16;                                         free.j_EP_M = 1;    units.j_EP_M='molE_P molM_V^{-1} d^{-1}';             label.j_EP_M='j_E_PM';      % P reserve maintenance rates, from Lorena 
+par.j_EN_M = .005;                                             free.j_EN_M = 1;    units.j_EN_M='molE_N molM_V^{-1} d^{-1}';             label.j_EN_M='j_E_NM';      % N reserve maintenance rates, from Lorena 
+par.j_EP_M = .005/16;                                         free.j_EP_M = 1;    units.j_EP_M='molE_P molM_V^{-1} d^{-1}';             label.j_EP_M='j_E_PM';      % P reserve maintenance rates, from Lorena 
 par.kappaEC = .5;                                              free.kappaEC = 0;   units.kappaEC='-';                                    label.kappaEC='kappa_E_C'; % kappas - fraction of rejected flux returned into C reserve
 par.kappaEN = .5;                                             free.kappaEN = 0;   units.kappaEN='-';                                    label.kappaEN='kappa_E_N'; % kappas - fraction of rejected flux returned into N reserve
 par.kappaEP = .5;                                             free.kappaEP = 0;   units.kappaEP='-';                                    label.kappaEP='kappa_E_P'; % kappas - fraction of rejected flux returned into P reserve
-par.kappaXC = 0.95;                                             free.kappaXC = 0;   units.kappaXC='-';                                    label.kappaXC='kappa_X_C'; % kappas - fraction of excreted flux added to the assimilable C source
-par.kappaXN = 0.0;                                             free.kappaXN = 0;   units.kappaXN='-';                                    label.kappaXN='kappa_X_N'; % kappas - fraction of excreted flux added to the assimilable N source
-par.kappaXP = 0.8;                                             free.kappaXP = 0;   units.kappaXP='-';                                    label.kappaXP='kappa_X_P'; % kappas - fraction of excreted flux added to the assimilable P source
-par.k_ss = 4e3;                                              free.k_ss = 0;      units.k_ss='molM_V^{-1}';                            label.k_ss='k_ss';     % self-shading constant
+par.kappaXC = 0.9;                                             free.kappaXC = 1;   units.kappaXC='-';                                    label.kappaXC='kappa_X_C'; % kappas - fraction of excreted flux added to the assimilable C source
+par.kappaXN = 0.9;                                             free.kappaXN = 1;   units.kappaXN='-';                                    label.kappaXN='kappa_X_N'; % kappas - fraction of excreted flux added to the assimilable N source
+par.kappaXP = 0.9;                                             free.kappaXP = 1;   units.kappaXP='-';                                    label.kappaXP='kappa_X_P'; % kappas - fraction of excreted flux added to the assimilable P source
+par.k_ss = 6e3;                                              free.k_ss = 1;      units.k_ss='molM_V^{-1}';                            label.k_ss='k_ss';     % self-shading constant
 
 %% auxiliary parameters
 par.T_A   = 7964.5;   free.T_A   = 0;    units.T_A = 'K';        label.T_A = 'T_A';      % Arrhenius temperature
