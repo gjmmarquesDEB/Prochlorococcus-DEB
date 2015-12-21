@@ -35,12 +35,6 @@ par.kappaXC = 0.95;                                             free.kappaXC = 0
 par.kappaXN = 0.0;                                             free.kappaXN = 0;   units.kappaXN='-';                                    label.kappaXN='kappa_X_N'; % kappas - fraction of excreted flux added to the assimilable N source
 par.kappaXP = 0.8;                                             free.kappaXP = 0;   units.kappaXP='-';                                    label.kappaXP='kappa_X_P'; % kappas - fraction of excreted flux added to the assimilable P source
 
-
-% Ki = 100.*nominal value
-% plus jEiM = 0.1*nominal value
-% plus kEdot = 3.2   <- 5.2
-% plus 0.1*jEiM
-
 %% auxiliary parameters
 par.T_A   = 7964.5;   free.T_A   = 0;    units.T_A = 'K';        label.T_A = 'T_A';      % Arrhenius temperature
 % par.del_M = 0.16;   free.del_M = 1;    units.del_M = '-';      label.del_M = 'del_M';  % shape coefficient
