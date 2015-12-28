@@ -29,16 +29,26 @@ function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, aux
   prdData.tXC_pro99 = t; 
   prdData.tXN_pro99 = t;
   prdData.tXP_pro99 = t;
-  prdData.tV_pro99= t;
+  prdData.tV_pro99 = t;
   prdData.tXC_LowN = t; 
   prdData.tXN_LowN = t;
   prdData.tXP_LowN = t;
-  prdData.tV_LowN= t;
+  prdData.tV_LowN = t;
   prdData.tXC_LowP = t; 
   prdData.tXN_LowP = t;
   prdData.tXP_LowP = t;
   prdData.tV_LowP = t;
   
+%   prdData.tV_pro991 = t;
+%   prdData.tV_pro992 = t;
+%   prdData.tV_pro993 = t;
+%   prdData.tV_LowN1= t;
+%   prdData.tV_LowN2 = t;
+%   prdData.tV_LowN3 = t;
+%   prdData.tV_LowP1 = t;
+%   prdData.tV_LowP2 = t;
+%   prdData.tV_LowP3 = t;
+
   % overwrite prdData to obtain dependent variables
   [prdData, info, StVar_pro99, StVar_LowN, StVar_LowP] = predict_Prochlorococcus_marinus(par, prdData, auxData);
  
@@ -61,6 +71,13 @@ function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, aux
   EXN_LowP = prdData.tXN_LowP;      % predictions (dependent variable) second set 
   EXP_LowP = prdData.tXP_LowP;      % predictions (dependent variable) third set
   V_LowP = prdData.tV_LowP;       % predictions (dependent variable) 7th set
+
+%   V_pro991 = prdData.tV_pro991;       % predictions (dependent variable) 7th set
+%   V_pro992 = prdData.tV_pro992;       % predictions (dependent variable) 7th set
+%   V_pro993 = prdData.tV_pro993;       % predictions (dependent variable) 7th set
+%   V_LowN1 = prdData.tV_LowN1;       % predictions (dependent variable) 7th set
+%   V_LowN2 = prdData.tV_LowN2;       % predictions (dependent variable) 7th set
+%   V_LowN3 = prdData.tV_LowN3;       % predictions (dependent variable) 7th set
 
   close all % remove existing figures, else you get more and more if you retry
 
@@ -98,6 +115,7 @@ function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, aux
   plot(t, V_pro99, 'g', 'linewidth', 4)
   hold on
   errorbar(tV_pro99(:,1), tV_pro99(:,2), SD.tV_pro99, '.r', 'markersize', 20)
+%   plot(tV_pro991(:,1), tV_pro991(:,2),tV_pro991(:,1), tV_pro992,tV_pro991(:,1), tV_pro993, '.r', 'markersize', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlim([0, 25])
   xlabel('time, days')
@@ -145,6 +163,7 @@ function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, aux
   plot(t, V_LowN, 'g', 'linewidth', 4)
   hold on
   errorbar(tV_LowN(:,1), tV_LowN(:,2), SD.tV_LowN, '.r', 'markersize', 20)
+%   plot(tV_LowN1(:,1), tV_LowN1(:,2),tV_LowN1(:,1), tV_LowN2,tV_LowN1(:,1), tV_LowN3, '.r', 'markersize', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlim([0, 25])
   xlabel('time, days')
@@ -191,6 +210,7 @@ function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, aux
   plot(t, V_LowP, 'g', 'linewidth', 4)
   hold on
   errorbar(tV_LowP(:,1), tV_LowP(:,2), SD.tV_LowP, '.r', 'markersize', 20)
+%   plot(tV_LowP1(:,1), tV_LowP1(:,2),tV_LowP1(:,1), tV_LowP2,tV_LowP1(:,1), tV_LowP3, '.r', 'markersize', 4)
   set(gca, 'Fontsize', 15, 'Box', 'on')
   xlim([0, 25])
   xlabel('time, days')
@@ -258,4 +278,21 @@ function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, aux
   ylabel('Biomass, mol L^{-1}')  
 
 
+ CtoN_Pro99 = par.n_NV + StVar_pro99(:,5)./(1 + StVar_pro99(:,4)) *106/16;
+ CtoN_LowN = par.n_NV + StVar_LowN(:,5)./(1 + StVar_LowN(:,4)) *106/16;
+ CtoN_LowP = par.n_NV + StVar_LowP(:,5)./(1 + StVar_LowP(:,4)) *106/16;
+ CtoP_Pro99 = par.n_PV + StVar_pro99(:,6)./(1 + StVar_pro99(:,4)) *106;
+ CtoP_LowN = par.n_PV + StVar_LowN(:,6)./(1 + StVar_LowN(:,4)) *106;
+ CtoP_LowP = par.n_PV + StVar_LowP(:,6)./(1 + StVar_LowP(:,4)) *106;
+ Es_MV_Pro99 = StVar_pro99(:,4:7);
+ Es_MV_LowN = StVar_LowN(:,4:7);
+ Es_MV_LowP = StVar_LowN(:,4:7);
 
+  
+  save for_plots.mat  t EXC_pro99 EXN_pro99 EXP_pro99 V_pro99 ...
+    EXC_LowN EXN_LowN EXP_LowN V_LowN ...
+    EXC_LowP EXN_LowP EXP_LowP V_LowP ...
+    CtoN_Pro99 CtoN_LowN  CtoN_LowP  CtoP_Pro99 CtoP_LowN  CtoP_LowP ...
+    Es_MV_Pro99 Es_MV_LowN Es_MV_LowP
+
+  
