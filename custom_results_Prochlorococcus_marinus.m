@@ -286,7 +286,7 @@ function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, aux
  CtoP_LowP = par.n_PV + StVar_LowP(:,6)./(1 + StVar_LowP(:,4)) *106;
  Es_MV_Pro99 = StVar_pro99(:,4:7);
  Es_MV_LowN = StVar_LowN(:,4:7);
- Es_MV_LowP = StVar_LowN(:,4:7);
+ Es_MV_LowP = StVar_LowP(:,4:7);
 
   
   save for_plots.mat  t EXC_pro99 EXN_pro99 EXP_pro99 V_pro99 ...
