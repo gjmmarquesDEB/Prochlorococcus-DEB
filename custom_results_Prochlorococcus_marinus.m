@@ -225,7 +225,7 @@ function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, aux
   ylabel('Structure, mol')
   
   subplot(2,3,5)
-  plot(t, (par.n_PV + StVar_pro99(:,5))./(1 + StVar_pro99(:,4)) *106, 'g', t, (par.n_PV + StVar_LowN(:,5))./(1 + StVar_pro99(:,4)) *106, 'b', t, (par.n_PV + StVar_LowP(:,5))./(1 + StVar_pro99(:,4)) *106, 'k', 'linewidth', 2)
+  plot(t, (par.n_NV + StVar_pro99(:,5))./(1 + StVar_pro99(:,4)) *106/16, 'g', t, (par.n_NV + StVar_LowN(:,5))./(1 + StVar_pro99(:,4)) *106/16, 'b', t, (par.n_NV + StVar_LowP(:,5))./(1 + StVar_pro99(:,4)) *106/16, 'k', 'linewidth', 2)
   xlabel('time, days')
   ylabel('Nitrogen Redfield ratio proportion, -')
   

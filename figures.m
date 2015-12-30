@@ -7,32 +7,32 @@ set(0,'DefaultAxesFontName', 'Times New Roman')
 set(0,'DefaultTextFontName', 'Times New Roman')
 
 figure
-% subplot(4,3,1)
-% title('PRO99 medium experiment')
-% plot(t, EXC_pro99, 'k', 'linewidth', .5)
-% hold on
-% errorbar(tXC_pro99(:,1), tXC_pro99(:,2), SD.tXC_pro99, '.k', 'markersize', 16)
-% xlim([0, 25])
-% ylabel('Carbon concentration, \mumol L^{-1}')
-% set(gca,'xticklabel',[])
-%   
-% subplot(4,3,2)
-% title('Low N medium experiment')
-% plot(t, EXC_LowN, 'k', 'linewidth', .5)
-% hold on
-% errorbar(tXC_LowN(:,1), tXC_LowN(:,2), SD.tXC_LowN, '.k', 'markersize', 16)
-% xlim([0, 25])
-% set(gca,'xticklabel',[])
-% set(gca,'yticklabel',[])
-%   
-% subplot(4,3,3)
-% title('Low P medium experiment')
-% plot(t, EXC_pro99, 'k', 'linewidth', .5)
-% hold on
-% errorbar(tXC_pro99(:,1), tXC_pro99(:,2), SD.tXC_pro99, '.k', 'markersize', 16)
-% xlim([0, 25])
-% set(gca,'xticklabel',[])
-% set(gca,'yticklabel',[])
+subplot(4,3,1)
+title('PRO99 medium experiment')
+plot(t, EXC_pro99, 'k', 'linewidth', .5)
+hold on
+errorbar(tXC_pro99(:,1), tXC_pro99(:,2), SD.tXC_pro99, '.k', 'markersize', 16)
+axis([0, 25, 0, 6000])
+ylabel('Carbon concentration, \mumol L^{-1}')
+set(gca,'xticklabel',[])
+  
+subplot(4,3,2)
+title('Low N medium experiment')
+plot(t, EXC_LowN, 'k', 'linewidth', .5)
+hold on
+errorbar(tXC_LowN(:,1), tXC_LowN(:,2), SD.tXC_LowN, '.k', 'markersize', 16)
+axis([0, 25, 0, 6000])
+set(gca,'xticklabel',[])
+set(gca,'yticklabel',[])
+  
+subplot(4,3,3)
+title('Low P medium experiment')
+plot(t, EXC_pro99, 'k', 'linewidth', .5)
+hold on
+errorbar(tXC_pro99(:,1), tXC_pro99(:,2), SD.tXC_pro99, '.k', 'markersize', 16)
+axis([0, 25, 0, 6000])
+set(gca,'xticklabel',[])
+set(gca,'yticklabel',[])
   
 subplot(4,3,4)
 plot(t, EXN_pro99, 'k', 'linewidth', .5)
