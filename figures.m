@@ -112,23 +112,27 @@ figure
 subplot(2,2,1)
 plot(t, Es_MV_Pro99(:,1), 'k', t, Es_MV_LowN(:,1), '-.k', t, Es_MV_LowP(:,1), '--k')
 ylabel('C reserve density, mol E_C mol V^{-1}')
+axis([0, 25, 0, 1.5])
 set(gca,'xticklabel',[])
   
 subplot(2,2,2)
 plot(t, Es_MV_Pro99(:,2), 'k', t, Es_MV_LowN(:,2), '-.k', t, Es_MV_LowP(:,2), '--k')
 ylabel('N reserve density, mol E_N V^{-1}')
+axis([0, 25, 0, 0.2])
 set(gca,'xticklabel',[])
 
 subplot(2,2,3)
 plot(t, Es_MV_Pro99(:,3), 'k', t, Es_MV_LowN(:,3), '-.k', t, Es_MV_LowP(:,3), '--k')
 xlabel('Time, days')
 ylabel('P reserve density, mol E_P V^{-1}')
+axis([0, 25, 0, 4e-3])
 legend('Pro 99','Low N','Low P')
 
 subplot(2,2,4)
 plot(t, Es_MV_Pro99(:,4), 'k', t, Es_MV_LowN(:,4), '-.k', t, Es_MV_LowP(:,4), '--k')
 xlabel('Time, days')
 ylabel('Structure, mol')
+axis([0, 25, 0, 3e-3])
 
 figure
 subplot(2,1,1)
