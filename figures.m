@@ -125,14 +125,14 @@ subplot(2,2,3)
 plot(t, Es_MV_Pro99(:,3), 'k', t, Es_MV_LowN(:,3), '-.k', t, Es_MV_LowP(:,3), '--k')
 xlabel('Time, days')
 ylabel('P reserve density, mol E_P V^{-1}')
-axis([0, 25, 0, 1e-3])
+axis([0, 25, 0, 6e-3])
 legend('Pro 99','Low N','Low P')
 
 subplot(2,2,4)
 plot(t, Es_MV_Pro99(:,4), 'k', t, Es_MV_LowN(:,4), '-.k', t, Es_MV_LowP(:,4), '--k')
 xlabel('Time, days')
 ylabel('Structure, mol')
-axis([0, 25, 0, 1e-4])
+axis([0, 25, 0, 3e-3])
 
 figure
 subplot(2,1,1)
