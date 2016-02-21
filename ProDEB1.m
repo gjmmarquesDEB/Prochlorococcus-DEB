@@ -28,7 +28,9 @@ r=fzero(fun,r0);
 
 % mobilisation rates
 j_EC_C=m_EC*(k_E-r); j_EN_C=m_EN*(k_E-r); j_EP_C=m_EP*(k_E-r); 
-j_EC_R=j_EC_C-j_EC_M-y_EC_V*r; j_EN_R=j_EN_C-j_EN_M-y_EN_V*r; j_EP_R=j_EP_C-j_EP_M-y_EP_V*r;
+j_EC_G = j_EC_C - j_EC_M; j_EN_G = j_EN_C - j_EN_M; j_EP_G = j_EP_C - j_EP_M;
+j_VG = 1/(sum([y_EC_V/ j_EC_G, y_EN_V/ j_EN_G, y_EP_V/ j_EP_G]) - (sum([j_EC_G/ y_EC_V, j_EN_G/ y_EN_V, j_EP_G/ y_EP_V]))^-1);
+j_EC_R=j_EC_C-j_EC_M-y_EC_V*j_VG; j_EN_R=j_EN_C-j_EN_M-y_EN_V*j_VG; j_EP_R=j_EP_C-j_EP_M-y_EP_V*j_VG;
 
 n_O = [1,        1,   0,   0;  % C/C, equals 1 by definition
            263/106,  2,   4,   0;  % H/C  these values show that we consider dry-mass
