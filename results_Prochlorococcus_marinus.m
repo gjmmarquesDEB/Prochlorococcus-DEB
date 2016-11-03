@@ -29,7 +29,7 @@ function results_Prochlorococcus_marinus(txt_par, par, chem, metapar, txt_data, 
   Prd_data.tXC_pro99 = t; 
   Prd_data.tXN_pro99 = t;
   Prd_data.tXP_pro99 = t;
-  Prd_data.tV_pro99= t;
+  Prd_data.tV_pro99 = t;
   Prd_data.tXC_LowN = t; 
   Prd_data.tXN_LowN = t;
   Prd_data.tXP_LowN = t;

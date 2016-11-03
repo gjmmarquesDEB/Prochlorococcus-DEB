@@ -106,7 +106,7 @@ axis([0, 25, 0, 1e-3])
 xlabel('Time, days')
 set(gca,'yticklabel',[])
 
-% saveas(h,'Fig2.epc','epsc') 
+% saveas(h,'Fig2.eps','epsc') 
 
 figure
 subplot(2,2,1)
@@ -134,14 +134,26 @@ xlabel('Time, days')
 ylabel('Structure, mol')
 axis([0, 25, 0, 3e-3])
 
+% figure
+% subplot(2,1,1)
+% plot(t, CtoN_Pro99, 'k', t, CtoN_LowN, '-.k', t, CtoN_LowP, '--k')
+% ylabel('N Redfield ratio proportion, -')
+% set(gca,'xticklabel',[])
+%  
+% subplot(2,1,2)
+% plot(t, CtoP_Pro99, 'k', t, CtoP_LowN, '-.k', t, CtoP_LowP, '--k')
+% xlabel('Time, days')
+% ylabel('P Redfield ratio proportion, -')
+% legend('Pro 99','Low N','Low P')
+
 figure
 subplot(2,1,1)
-plot(t, CtoN_Pro99, 'k', t, CtoN_LowN, '-.k', t, CtoN_LowP, '--k')
+plot(t, 1./CtoN_Pro99, 'k', t, 1./CtoN_LowN, '-.k', t, 1./CtoN_LowP, '--k')
 ylabel('N Redfield ratio proportion, -')
 set(gca,'xticklabel',[])
  
 subplot(2,1,2)
-plot(t, CtoP_Pro99, 'k', t, CtoP_LowN, '-.k', t, CtoP_LowP, '--k')
+plot(t, 1./CtoP_Pro99, 'k', t, 1./CtoP_LowN, '-.k', t, 1./CtoP_LowP, '--k')
 xlabel('Time, days')
 ylabel('P Redfield ratio proportion, -')
 legend('Pro 99','Low N','Low P')
