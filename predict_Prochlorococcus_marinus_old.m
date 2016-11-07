@@ -24,8 +24,7 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
                  kappaEC < 0 || kappaEC > 1 || kappaEN < 0 || kappaEN > 1 || kappaEP < 0 || kappaEP > 1 || ...  % energy conservation
                  kappaXC < 0 || kappaXC > 1 || kappaXN < 0 || kappaXN > 1 || kappaXP < 0 || kappaXP > 1 || ...
                  RR_Nm * 106/16 > 7 || RR_Pm * 106 > 7 || ...                 %m_ECm > 100 || ...
-                 m_ENm > 10 || m_EPm > 20 || ... 
-                 j_EC_M < j_EN_M * 206/16;       % maintenance in C must be higher than the others
+                 m_ENm > 10 || m_EPm > 20;        % energy conservation
   
              
   if filterChecks  

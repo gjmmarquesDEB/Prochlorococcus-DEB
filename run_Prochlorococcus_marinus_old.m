@@ -26,7 +26,7 @@ estim_options('simplex_size', -0.05);
 
 estim_options('pars_init_method', 1);
 estim_options('pseudodata_pets', 2);
-estim_options('results_output', 1);
+estim_options('results_output', 0);
 estim_options('method', 'no');
 
 % check_my_pet('Prochlorococcus_marinus') % check pet-files for required fields
