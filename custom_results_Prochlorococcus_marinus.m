@@ -278,7 +278,8 @@ function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, aux
   ylabel('Biomass, mol L^{-1}')  
 
 
- CtoN_Pro99 = (par.n_NV + StVar_pro99(:,5))./(1 + StVar_pro99(:,4)) *106/16;
+%  CtoN_Pro99 = (par.n_NV + StVar_pro99(:,5))./(1 + StVar_pro99(:,4)) *106/16;
+CtoN_Pro99 = (par.n_NV + StVar_pro99(:,5))./(1 + StVar_pro99(:,4)) *106/16;
  CtoN_LowN = (par.n_NV + StVar_LowN(:,5))./(1 + StVar_LowN(:,4)) *106/16;
  CtoN_LowP = (par.n_NV + StVar_LowP(:,5))./(1 + StVar_LowP(:,4)) *106/16;
  CtoP_Pro99 = (par.n_PV + StVar_pro99(:,6))./(1 + StVar_pro99(:,4)) *106;
@@ -288,7 +289,16 @@ function custom_results_Prochlorococcus_marinus(par, metaPar, data, txtData, aux
  Es_MV_LowN = StVar_LowN(:,4:7);
  Es_MV_LowP = StVar_LowP(:,4:7);
 
+
   
+  save for_plots.mat  t EXC_pro99 EXN_pro99 EXP_pro99 V_pro99 ...
+    EXC_LowN EXN_LowN EXP_LowN V_LowN ...
+    EXC_LowP EXN_LowP EXP_LowP V_LowP ...
+    CtoN_Pro99 CtoN_LowN  CtoN_LowP  CtoP_Pro99 CtoP_LowN  CtoP_LowP ...
+    Es_MV_Pro99 Es_MV_LowN Es_MV_LowP
+
+  
+ 
   save for_plots.mat  t EXC_pro99 EXN_pro99 EXP_pro99 V_pro99 ...
     EXC_LowN EXN_LowN EXP_LowN V_LowN ...
     EXC_LowP EXN_LowP EXP_LowP V_LowP ...
