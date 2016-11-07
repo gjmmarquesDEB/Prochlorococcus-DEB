@@ -187,19 +187,9 @@ temp.SP.tXN_LowP = T_C+24;
 
 %% set weights for all real data
 weights = setweights(data, []);
-weights.tV_pro99 = weights.tV_pro99 * 100;
-weights.tV_LowN  = weights.tV_LowN  * 100;
-weights.tV_LowP  = weights.tV_LowP  * 100;
-
-% weights.tV_pro991 = weights.tV_pro991 * 100;
-% weights.tV_LowN1  = weights.tV_LowN1  * 100;
-% weights.tV_LowP1  = weights.tV_LowP1  * 100;
-% weights.tV_pro992 = weights.tV_pro992 * 100;
-% weights.tV_LowN2  = weights.tV_LowN2  * 100;
-% weights.tV_LowP2  = weights.tV_LowP2  * 100;
-% weights.tV_pro993 = weights.tV_pro993 * 100;
-% weights.tV_LowN3  = weights.tV_LowN3  * 100;
-% weights.tV_LowP3 = weights.tV_LowP3  * 100;
+weights.tV_pro99 = weights.tV_pro99 * 10;
+weights.tV_LowN  = weights.tV_LowN  * 10;
+weights.tV_LowP  = weights.tV_LowP  * 10;
 
 %% pack auxData and txtData for output
 auxData.temp = temp; auxData.SD = SD;

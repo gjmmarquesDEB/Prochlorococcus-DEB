@@ -33,10 +33,10 @@ j_VG = 1/(sum([y_EC_V/ j_EC_G, y_EN_V/ j_EN_G, y_EP_V/ j_EP_G]) - (sum([j_EC_G/ 
 j_EC_R=j_EC_C-j_EC_M-y_EC_V*j_VG; j_EN_R=j_EN_C-j_EN_M-y_EN_V*j_VG; j_EP_R=j_EP_C-j_EP_M-y_EP_V*j_VG;
 
 n_O = [1,        1,   0,   0;  % C/C, equals 1 by definition
-           263/106,  2,   4,   0;  % H/C  these values show that we consider dry-mass
-          10/106,   1,   0,   4;  % O/C
-          16/106,   0,   1,   0;    % N/C
-          1/106,    0,   0,   1];
+       263/106,  2,   4,   0;  % H/C  these values show that we consider dry-mass
+       10/106,   1,   0,   4;  % O/C
+       16/106,   0,   1,   0;  % N/C
+       1/106,    0,   0,   1];
    
 % the differential equatons
 diff_DEB(1) = 0; 
