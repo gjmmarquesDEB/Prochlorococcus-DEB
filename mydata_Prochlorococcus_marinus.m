@@ -59,22 +59,24 @@ num_cell = ...
 % units.num_cell={'days','# L^{-1}'}; label.num_cell={'time','Number of cells per liter'};  bibkey.num_cell='Anon2015';  temp.num_cell=T_C+24;
 
 % Biomass
-data.tV_pro99=[num_cell(:,1),num_cell(:,2)*4.5639e-15]; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
+biomass = [num_cell(:,1), num_cell(:,2:7)*4.5639e-15]; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
+
+data.tV_pro99 = biomass(~isnan(biomass(:,2)), [1 2]); 
 units.tV_pro99={'days','mol L^{-1}'}; label.tV_pro99={'time','Biomass in C-moles'};  bibkey.tV_pro99='Anon2015';  temp.tV_pro99=T_C+24;
 
-SD.tV_pro99 = num_cell(:,5)*4.5639e-15; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
+SD.tV_pro99 = biomass(~isnan(biomass(:,2)), 5);
 units.SD.tV_pro99 = {'mol L^{-1}'}; label.SD.tV_pro99 = {'Biomass in C-moles'};  bibkey.SD.tV_pro99 = 'Anon2015';  temp.SD.tV_pro99 = T_C+24;
 
-data.tV_LowN=[num_cell(:,1),num_cell(:,3)*4.5639e-15]; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
+data.tV_LowN = biomass(~isnan(biomass(:,3)), [1 3]);
 units.tV_LowN={'days','mol L^{-1}'}; label.tV_LowN={'time','Biomass in C-moles'};  bibkey.tV_LowN='Anon2015';  temp.tV_LowN=T_C+24;
 
-SD.tV_LowN = num_cell(:,6)*4.5639e-15; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
+SD.tV_LowN = biomass(~isnan(biomass(:,3)), 6);
 units.SD.tV_LowN = {'mol L^{-1}'}; label.SD.tV_LowN = {'Biomass in C-moles'};  bibkey.SD.tV_LowN = 'Anon2015';  temp.SD.tV_LowN = T_C+24;
 
-data.tV_LowP=[num_cell(:,1),num_cell(:,4)*4.5639e-15]; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
+data.tV_LowP = biomass(~isnan(biomass(:,4)), [1 4]);
 units.tV_LowP={'days','mol L^{-1}'}; label.tV_LowP={'time','Biomass in C-moles'};  bibkey.tV_LowP='Anon2015';  temp.tV_LowP=T_C+24;
 
-SD.tV_LowP = num_cell(:,7)*4.5639e-15; % q_C = 3.83e-15; % mol cell-1, average C quota, q_N = 6.71e-16; % mol cell-1, average N quota, q_P = 6.29e-17; % mol cell-1, average P quota 4.5639e-15=sum qs
+SD.tV_LowP = biomass(~isnan(biomass(:,4)), 7);
 units.SD.tV_LowP = {'mol L^{-1}'}; label.SD.tV_LowP = {'Biomass in C-moles'};  bibkey.SD.tV_LowP = 'Anon2015';  temp.SD.tV_LowP = T_C+24;
 
 % biomass, all curves, no SD
@@ -164,10 +166,10 @@ temp.tXP_pro99 = T_C + 24;
 SD.tXP_pro99 = nut(:,9);  units.SD.tXP_pro99 = {'\mu mol L^{-1}'}; label.SD.tXP_pro99 = {'P concentration SD'};  bibkey.SD.tXP_pro99 = 'Anon2015';  
 temp.SP.tXN_pro99 = T_C+24;
 
-data.tXN_LowN = nut(:,[1 4]);     units.tXN_LowN = {'days','\mu mol L^{-1}'};   label.tXN_LowN = {'time','N concentration'};   bibkey.tXN_LowN = 'Anon2015';
+data.tXN_LowN = nut(~isnan(nut(:,4)),[1 4]);     units.tXN_LowN = {'days','\mu mol L^{-1}'};   label.tXN_LowN = {'time','N concentration'};   bibkey.tXN_LowN = 'Anon2015';
 temp.tXN_LowN = T_C + 24; 
 
-SD.tXN_LowN = nut(:,10);  units.SD.tXN_LowN = {'\mu mol L^{-1}'}; label.SD.tXN_LowN = {'N concentration SD'};  bibkey.SD.tXN_LowN = 'Anon2015';  
+SD.tXN_LowN = nut(~isnan(nut(:,4)),10);  units.SD.tXN_LowN = {'\mu mol L^{-1}'}; label.SD.tXN_LowN = {'N concentration SD'};  bibkey.SD.tXN_LowN = 'Anon2015';  
 temp.SD.tXN_LowN = T_C+24;
 
 data.tXP_LowN = nut(:,[1 5]);     units.tXP_LowN = {'days','\mu mol L^{-1}'};   label.tXP_LowN = {'time','P concentration'};   bibkey.tXP_LowN = 'Anon2015';
@@ -192,7 +194,7 @@ temp.SP.tXN_LowP = T_C+24;
 weights = setweights(data, []);
 weights.tV_pro99 = weights.tV_pro99 * 10;
 weights.tV_LowN  = weights.tV_LowN  * 10;
-weights.tV_LowP  = weights.tV_LowP  * 10;
+weights.tXP_LowP(1) = 0;
 
 %% pack auxData and txtData for output
 auxData.temp = temp; auxData.SD = SD;

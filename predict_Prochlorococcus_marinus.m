@@ -93,6 +93,7 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
   tNC_pro99  = union(tXN_pro99(:,1)', tXC_pro99(:,1)');    tNC_LowN  = union(tXN_LowN(:,1)', tXC_LowN(:,1)');  tNC_LowP  = union(tXN_LowP(:,1)', tXC_LowP(:,1)');
   tAll_pro99 = union(tNC_pro99,tV_pro99(:,1)');  tAll_LowN = union(tNC_LowN,tV_LowN(:,1)');  tAll_LowP = union(tNC_LowP,tV_LowP(:,1)');
   pos_N_pro99 = ismember(tAll_pro99, tXN_pro99(:,1)');   pos_N_LowN = ismember(tAll_LowN, tXN_LowN(:,1)');    pos_N_LowP = ismember(tAll_LowP, tXN_LowP(:,1)');
+  pos_P_pro99 = ismember(tAll_pro99, tXP_pro99(:,1)');   pos_P_LowN = ismember(tAll_LowN, tXP_LowN(:,1)');    pos_P_LowP = ismember(tAll_LowP, tXP_LowP(:,1)');
   pos_C_pro99 = ismember(tAll_pro99, tXC_pro99(:,1)');   pos_C_LowN = ismember(tAll_LowN, tXC_LowN(:,1)');    pos_C_LowP = ismember(tAll_LowP, tXC_LowP(:,1)');
   pos_V_pro99 = ismember(tAll_pro99, tV_pro99(:,1)');   pos_V_LowN = ismember(tAll_LowN, tV_LowN(:,1)');    pos_V_LowP = ismember(tAll_LowP, tV_LowP(:,1)');
   tvec_pro99 = tAll_pro99;  tvec_LowN = tAll_LowN;  tvec_LowP = tAll_LowP;
@@ -115,17 +116,17 @@ function [prdData, info, XNut_pro99, XNut_LowN, XNut_LowP] = predict_Prochloroco
 %   prdData.num_cell=NumCell;
 %   prdData.biomass=Biomass;
   prdData.tXN_pro99 = XNut_pro99(pos_N_pro99, 2) * 1e6; % concentration in muM
-  prdData.tXP_pro99 = XNut_pro99(pos_N_pro99, 3) * 1e6; % concentration in muM
+  prdData.tXP_pro99 = XNut_pro99(pos_P_pro99, 3) * 1e6; % concentration in muM
   prdData.tXC_pro99 = XNut_pro99(pos_C_pro99, 1) * 1e6; % concentration in muM
   prdData.tV_pro99 = XNut_pro99(pos_V_pro99, 7) .* (1 + XNut_pro99(pos_V_pro99, 4));       % biomass in mols
 
   prdData.tXN_LowN = XNut_LowN(pos_N_LowN, 2) * 1e6; % concentration in muM
-  prdData.tXP_LowN = XNut_LowN(pos_N_LowN, 3) * 1e6; % concentration in muM
+  prdData.tXP_LowN = XNut_LowN(pos_P_LowN, 3) * 1e6; % concentration in muM
   prdData.tXC_LowN = XNut_LowN(pos_C_LowN, 1) * 1e6; % concentration in muM
   prdData.tV_LowN = XNut_LowN(pos_V_LowN, 7) .* (1 + XNut_LowN(pos_V_LowN, 4));       % biomass in mols
 
   prdData.tXN_LowP = XNut_LowP(pos_N_LowP, 2) * 1e6; % concentration in muM
-  prdData.tXP_LowP = XNut_LowP(pos_N_LowP, 3) * 1e6; % concentration in muM
+  prdData.tXP_LowP = XNut_LowP(pos_P_LowP, 3) * 1e6; % concentration in muM
   prdData.tXC_LowP = XNut_LowP(pos_C_LowP, 1) * 1e6; % concentration in muM
   prdData.tV_LowP = XNut_LowP(pos_V_LowP, 7) .* (1 + XNut_LowP(pos_V_LowP, 4));       % biomass in mols
   
