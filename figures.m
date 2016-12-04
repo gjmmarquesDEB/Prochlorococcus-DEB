@@ -153,10 +153,10 @@ axis([0, 25, 0, 3e-3])
 
 figure
 subplot(2,1,1)
-% plot(t, 1./CtoN_Pro99, 'k', t, 1./CtoN_LowN, '-.k', t, 1./CtoN_LowP, '--k')
+plot(t, 1./CtoN_Pro99, 'k', t, 1./CtoN_LowN, '-.k', t, 1./CtoN_LowP, '--k')
 % figure
-subplot(2,1,1)
-plot(t, CtoN_Pro99, 'k', t, CtoN_LowN, '-.k', t, CtoN_LowP, '--k')
+% subplot(2,1,1)
+% plot(t, CtoN_Pro99, 'k', t, CtoN_LowN, '-.k', t, CtoN_LowP, '--k')
 ylabel('N Redfield ratio proportion, -')
 set(gca,'xticklabel',[])
  
